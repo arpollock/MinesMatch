@@ -12,7 +12,7 @@ CREATE TABLE `user` (
  `first_name` text NOT NULL,
  `last_name` text NOT NULL,
  `gender` text NOT NULL,
- `image_file` text NOT NULL,
+ `image_file` text,
  PRIMARY KEY (`user_id`)
 ) 
 
@@ -29,10 +29,11 @@ CREATE TABLE `preference` (
 CREATE TABLE `question` (
  `question_id` int(11) NOT NULL AUTO_INCREMENT,
  `question_text` varchar(256) NOT NULL,
+ `question_answer` varchar(256) NOT NULL,
  `weight` int(11) NOT NULL,
  PRIMARY KEY (`question_id`),
  UNIQUE KEY `question_text` (`question_text`)
-)
+) 
 
 CREATE TABLE `matches` (
  `user1_id` int(11) NOT NULL,
