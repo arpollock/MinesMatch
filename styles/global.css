@@ -1,0 +1,35 @@
+body {
+    --main-bg-color: #2c2c54;
+    --secondary-bg-color: #40407a;
+    --main-text-color: #ffffff;
+    --main-pop-color: #ff5252;
+    --secondary-pop-color: #b33939;
+    --padding: 20px;
+    --border-rad: 5px;
+    padding: 0;
+    margin: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+header, footer {
+    background-color: var(--main-bg-color);
+    padding: var(--padding);
+    color: var(--main-text-color);
+}
+header p:first-of-type {
+    font-style: italic;
+}
+header a {
+    display: inline-block;
+    cursor: pointer;
+}
+header a:hover {
+    color: var(--main-pop-color);
+}
+header a:not(:last-child) {
+    margin-right: var(--padding);
+}
+.main-content {
+    padding-left: var(--padding);
+    padding-right: var(--padding);
+    position: relative;
+}

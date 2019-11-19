@@ -12,11 +12,12 @@
         <meta name="author" content="Alex P, Emma M, and Morgan C"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="./styles/global.css">
+        <link rel="stylesheet" type="text/css" href="./styles/dashboard.css">
     </head>
     <body>
         <!-- This content is seen on the main viewport -->
         <?php include './templateHeader.php'; ?>
-        <section>
+        <section class="main-content">
             <h2>Blah</h2>
             <p>Meow.</p>
         </section>
