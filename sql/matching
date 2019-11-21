@@ -1,0 +1,3 @@
+(SELECT first_name, last_name FROM) user INNER JOIN (on preference and question) 
+
+from the new inner join, search for the user that you're matching up, check their responses, if same, check weight, return first_name, last_name,email?
