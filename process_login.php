@@ -2,7 +2,6 @@
 	// Data base connection
 	include "databse_conn.php";
 
-	
 	// Setting variables
 	if(isset($_POST['email'])){
 		$email = $_POST["email"];
@@ -24,12 +23,34 @@
 	$row = mysqli_fetch_row($result);
 	
 	if(($row[0] == $email) && ($row[1] == $password)){
-		echo "Login sucesses!!";
 		$user_id = $row[3];
-		header('Location: ./user_page.php');
-		echo "<a href=./user_page.php?id=" . $row[0]. ">click me</a>";
-	}
-	else {
-		echo "Incorrect email or passowrd";
+		header('Location: ./dashboard.php');
 	}
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>  
+        <!-- This content is hidden from the main viewport -->
+        <title>Mines Match - Login</title>
+        <meta charset="utf-8"/>
+        <meta name="description" content="Mines Match Login"/>
+        <meta name="author" content="Alex P, Emma M, and Morgan C"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="./styles/global.css">
+        <link rel="stylesheet" type="text/css" href="./styles/login.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="./scripts/login.js"></script>
+    </head>
+		
+	<body>
+		  <!-- This content is seen on the main viewport -->
+        <section class="main-content">
+            <div class="login-form">
+				<h1 id="login_error">Login Failed</h1>
+                <h2>Your Mines Match Email or Pass was not a Match!!</h2>
+				<button id="login_error_btn" onclick="location.href='./login.php'">Try again</button>
+			</div>
+        </section>
+	</body>
+</html>

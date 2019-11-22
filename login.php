@@ -29,7 +29,7 @@
                 <h1>Welcome to Mines Match!</h1>
                 <p>The online dating service for geeks, by geeks.</p>
 				
-				<form id="new_user" action="<?php new_user(); ?>" method="POST">
+				<form id="new_user" action="process_new_user.php" method="POST">
 					<div class="flex-input">
                         <label for="email">Email: </label>
                         <input type="email" name="email" id="new_user_email" class="login-text-input" placeholder="Enter email" required>
@@ -70,37 +70,3 @@
         </section>
 	</body>
 </html>
-
-<?php 
-	function new_user() {
-		
-		console.log("1");
-		if(isset($_POST['register'])) {
-			echo "HAHA";
-			console.log("2");
-			$email = $_POST['new_user_email'];
-			$password = $_POST['new_user_password'];
-			$confirm_password = $_POST['confirm_password'];
-			
-			if($password != $confirm_password){
-				console.log("3");
-			}
-			else {
-				console.log("4");
-				$stmt = $conn->prepare("INSERT INTO login(email, passowrd) VALUES (?, ?)");
-				$stmt->bind_param("ss", $email, $password);
-				$stmt->execute() or die("Failed to login!");
-				$result = $stmt->get_result();
-				$row = mysqli_fetch_row($result);
-				echo "You are now a user!";
-				$new_user = "./user_page.php?id=" .  urlencode($row[2]);
-			}
-			
-		}
-		
-		console.log("5");
-	}
-
-?>
-
- 
