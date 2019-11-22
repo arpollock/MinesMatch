@@ -1,3 +1,11 @@
-(SELECT first_name, last_name FROM) user INNER JOIN (on preference and question) 
-
-from the new inner join, search for the user that you're matching up, check their responses, if same, check weight, return first_name, last_name,email?
+when user is created:
+  append to matches with new user + potential match (state = 1) for all other users who match preferred gender
+  
+  when user answers question:
+    append to preferences table
+    
+ when user clicks on matches:
+    search matches for u1_id and if status == 3 display as match, if status == 2 display as pending
+    
+when user clicks on a matched user:
+    display user2 info plus preference info
