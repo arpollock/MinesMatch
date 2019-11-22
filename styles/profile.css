@@ -1,0 +1,13 @@
+.main-content {
+    padding-left: var(--padding);
+    padding-right: var(--padding);
+    padding-top: var(--padding);
+}
+.about-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.profile-pic {
+    margin-right: var(--padding);
+}

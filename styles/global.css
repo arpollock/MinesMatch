@@ -7,10 +7,12 @@ body {
     --secondary-pop-color: #b33939;
     --padding: 20px;
     --border-rad: 5px;
+    --footer-height: 80px;
     padding: 0;
     margin: 0;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     min-height: 100vh;
+    position: relative;
 }
 header, footer {
     background-color: var(--main-bg-color);
@@ -40,9 +42,8 @@ header a:not(:last-child) {
     margin-right: var(--padding);
 }
 .main-content {
-    padding-left: var(--padding);
-    padding-right: var(--padding);
     position: relative;
+    padding-bottom: var(--footer-height);
 }
 footer {
     /*TODO: this is always at the bottom but we need it to be at the
@@ -51,4 +52,6 @@ footer {
     position: absolute;
     bottom: 0;
     width: 100vw;
+    height: var(--footer-height);
+    box-sizing: border-box;
 }

@@ -17,9 +17,6 @@
 .tab-header>.tab-item:not(:last-child) {
     margin-right: var(--padding);
 }
-body>.main-content {
-    padding: 0;
-}
 .tab-content {
     padding: var(--padding);
 }
