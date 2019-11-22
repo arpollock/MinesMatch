@@ -58,3 +58,23 @@ body {
 .login-text-input {
     flex-grow: 10;
 }
+
+#login_error {
+	color: var(--error-color);
+}
+
+#login_error_btn {
+	background-color: var(--main-pop-color);
+	font-size: var(button-font-size);
+	padding: var(--padding);
+	border-radius: var(--border-rad);
+	color: var(--main-bg-color);
+}
+
+
+#login_error_btn:active {
+	background-color: var(--main-bg-color);
+	box-shadow: 0 5px #666;
+	transform: translateY(4px);
+	color: var(--main-pop-color);
+}
