@@ -1,0 +1,51 @@
+.tab-header {
+    width: 100%;
+    display: block;
+    background-color: var(--main-pop-color);
+}
+.tab-header>.tab-item {
+    display: inline-block;
+    color: var(--main-bg-color);
+    padding: var(--padding);
+    cursor: pointer;
+}
+.tab-header>.tab-item-active{
+    background-color: var(--secondary-bg-color);
+    color: var(--main-text-color);
+    cursor: default;
+}
+.tab-header>.tab-item:not(:last-child) {
+    margin-right: var(--padding);
+}
+body>.main-content {
+    padding: 0;
+}
+.tab-content {
+    padding: var(--padding);
+}
+.match-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--main-bg-color);
+}
+.match-table tr {
+    border: 1px solid var(--main-bg-color);
+    background-color: var(--main-bg-color);
+    color: var(--main-text-color);
+}
+.match-table tr:nth-child(odd) {
+    background-color: var(--secondary-bg-color);
+}
+.match-table tr:first-child {
+    border: 1px double var(--main-bg-color);
+    background-color: var(--main-pop-color);
+}
+.match-table tr:not(:first-child) {
+    cursor: pointer;
+}
+.match-table td, .match-table th {
+    padding: calc(var(--padding) / 2);
+    text-align: left;
+}
+
+

@@ -2,6 +2,7 @@ body {
     --main-bg-color: #2c2c54;
     --secondary-bg-color: #40407a;
     --main-text-color: #ffffff;
+    --secondary-text-color: #dcdde1;
     --main-pop-color: #ff5252;
     --secondary-pop-color: #b33939;
     --padding: 20px;
@@ -11,6 +12,7 @@ body {
     padding: 0;
     margin: 0;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    min-height: 100vh;
 }
 header, footer {
     background-color: var(--main-bg-color);
@@ -23,6 +25,15 @@ header p:first-of-type {
 header a {
     display: inline-block;
     cursor: pointer;
+    color: var(--main-text-color);
+    text-decoration: none;
+}
+header .active-pg {
+    color: var(--secondary-text-color);
+}
+header .active-pg:hover {
+    color: var(--secondary-text-color);
+    cursor: default;
 }
 header a:hover {
     color: var(--main-pop-color);
@@ -34,4 +45,12 @@ header a:not(:last-child) {
     padding-left: var(--padding);
     padding-right: var(--padding);
     position: relative;
+}
+footer {
+    /*TODO: this is always at the bottom but we need it to be at the
+    bottom in the worst case (currently blocks content at the end)
+    */
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
 }
