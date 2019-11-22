@@ -2,7 +2,8 @@
     <h1>Mines Match</h1>
     <p>The online dating service for geeks, by geeks.</p>
     <nav>
-        <a <?php if( !is_active('dashboard') ) { echo('href="'. $path_to_home . 'dashboard.php"'); }?> class="<?php if(is_active('index')) {echo 'active-pg';}?>">Dashboard</a>
+        <a <?php if( !is_active('dashboard') ) { echo('href="'. $path_to_home . 'dashboard.php"'); }?> class="<?php if(is_active('dashboard')) {echo 'active-pg';}?>">Match Dashboard</a>
+        <a <?php if( !is_active('my_profile') ) { echo('href="'. $path_to_home . 'my_profile.php"'); }?> class="<?php if(is_active('my_profile')) {echo 'active-pg';}?>">My Profile</a>
         <a onclick="logout()">Sign Out</a>
     </nav>
 </header>

@@ -18,8 +18,35 @@
         <!-- This content is seen on the main viewport -->
         <?php include './templateHeader.php'; ?>
         <section class="main-content">
-            <h2>Blah</h2>
-            <p>Meow.</p>
+            <section class="tab-wrapper">
+                <div class="tab-header">
+                    <div class="tab-item tab-item-active">
+                        Pending Matches
+                    </div>
+                    <div class="tab-item">
+                        Successful Matches
+                    </div>
+                </div>
+                <div class="tab-content" id="pending-matches">
+                    <table class="match-table">
+                        <tr>
+                           <th>First Name</th>
+                           <th>Last Name</th> 
+                        </tr>
+                        <tr>
+                           <td>John</td>
+                           <td>Doe</td> 
+                        </tr>
+                        <tr>
+                           <td>Foo</td>
+                           <td>Blah</td> 
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-content" id="successful-matches">
+
+                </div>
+            </section>
         </section>
         <?php include './templateFooter.php'; ?>
     </body>
