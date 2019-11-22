@@ -1,6 +1,9 @@
 <?php
-    $current_page = "my_profile";
+    $current_page = "other_profile";
     $path_to_home = "./";
+    $uid = $_REQUEST["uid"];
+    // TODO: query sql for first and last name from uid
+    // ... and all other profile info
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +20,7 @@
         <!-- This content is seen on the main viewport -->
         <?php include './templateHeader.php'; ?>
         <section class="main-content">
-            <h2>Someone else's profile</h2>
+            <h2><?php echo $uid?>'s profile</h2>
         </section>
         <?php include './templateFooter.php'; ?>
     </body>

@@ -40,6 +40,9 @@ body>.main-content {
     border: 1px double var(--main-bg-color);
     background-color: var(--main-pop-color);
 }
+.match-table tr:not(:first-child) {
+    cursor: pointer;
+}
 .match-table td, .match-table th {
     padding: calc(var(--padding) / 2);
     text-align: left;

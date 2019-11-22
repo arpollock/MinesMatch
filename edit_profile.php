@@ -6,7 +6,7 @@
 <html lang="en">
     <head>  
         <!-- This content is hidden from the main viewport -->
-        <title>Mines Match - Edit Your Profile</title>
+        <title>Mines Match - Edit Profile</title>
         <meta charset="utf-8"/>
         <meta name="description" content="Mines Match Dashboard"/>
         <meta name="author" content="Alex P, Emma M, and Morgan C"/>
