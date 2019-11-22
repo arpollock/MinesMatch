@@ -38,7 +38,7 @@ CREATE TABLE `question` (
 CREATE TABLE `matches` (
  `user1_id` int(11) NOT NULL,
  `user2_id` int(11) NOT NULL,
- `match_state` enum('0','1','-1','-2','-3') NOT NULL,
+ `match_state` enum('0','1','2','3') NOT NULL,
  PRIMARY KEY (`user2_id`,`user1_id`),
  KEY `user1_id` (`user1_id`,`user2_id`),
  CONSTRAINT `matches_ibfk_1` FOREIGN KEY (`user1_id`) REFERENCES `user` (`user_id`),
