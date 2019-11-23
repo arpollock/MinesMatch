@@ -21,17 +21,18 @@
     justify-content: flex-start;
     align-items: stretch;
 }
-.match-wrapper {
+.title-wrapper {
     display: flex;
     flex-direction: row;
     justify-items: flex-start;
     align-items: center;
 }
-.match-wrapper>:first-child {
+.title-wrapper>:first-child {
     margin-right: var(--padding);
 }
 #match-buttons>#match-yes, #match-buttons>#match-no {
     padding: calc(var(--padding) / 2);
+    cursor: pointer;
 }
 #match-buttons>#match-yes{
     background-color: #b8e994;

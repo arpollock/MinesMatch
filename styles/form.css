@@ -1,0 +1,18 @@
+.main-content>h2:first-child {
+    margin-left: var(--padding);
+    margin-right: var(--padding);
+}
+#edit_preferences {
+    padding: 0 var(--padding);
+}
+#edit_preferences>* {
+    margin-top: var(--padding);
+    margin-bottom: var(--padding);
+}
+#edit_preferences .flex-input {
+    justify-content: flex-start;
+    width: 100%;
+}
+#edit_preferences .flex-input>input:not(:last-child) {
+    margin-right: calc(var(--padding) / 2);
+}

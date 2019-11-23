@@ -20,6 +20,7 @@
         <!-- This content is seen on the main viewport -->
         <?php include './templateHeader.php'; ?>
         <section class="main-content">
+            <!-- TODO: store cookies here so can do "Back to Pending/Successful Matches"-->
             <section class="tab-wrapper">
                 <div class="tab-header">
                     <div class="tab-item tab-item-active" id="pending-matches-tab" onclick="toggle_match_tab('pending')">
@@ -36,11 +37,11 @@
                            <th>First Name</th>
                            <th>Last Name</th> 
                         </tr>
-                        <tr onclick="window.location='./other_profile.php?uid=123';"> 
+                        <tr onclick="window.location='./other_profile.php?uid=123&p=1';"> 
                            <td>John</td>
                            <td>Doe</td> 
                         </tr>
-                        <tr onclick="window.location='./other_profile.php?uid=456';">
+                        <tr onclick="window.location='./other_profile.php?uid=456&p=1';">
                            <td>Foo</td>
                            <td>Blah</td> 
                         </tr>
@@ -53,11 +54,11 @@
                            <th>First Name</th>
                            <th>Last Name</th> 
                         </tr>
-                        <tr onclick="window.location='./other_profile.php?uid=789';"> 
+                        <tr onclick="window.location='./other_profile.php?uid=789&p=0';"> 
                            <td>Al</td>
                            <td>Dog</td> 
                         </tr>
-                        <tr onclick="window.location='./other_profile.php?uid=666';">
+                        <tr onclick="window.location='./other_profile.php?uid=666&p=0';">
                            <td>Snoop</td>
                            <td>Dog</td> 
                         </tr>

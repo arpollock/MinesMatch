@@ -14,9 +14,6 @@
     color: var(--main-text-color);
     cursor: default;
 }
-.tab-header>.tab-item:not(:last-child) {
-    margin-right: var(--padding);
-}
 .tab-content {
     padding: var(--padding);
 }

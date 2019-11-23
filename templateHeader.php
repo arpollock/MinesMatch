@@ -1,5 +1,5 @@
 <header>
-    <h1>Mines Match</h1>
+    <h1 onclick="location.href='./dashboard.php'">Mines Match</h1>
     <p>The online dating service for geeks, by geeks.</p>
     <nav>
         <a <?php if( !is_active('dashboard') ) { echo('href="'. $path_to_home . 'dashboard.php"'); }?> class="<?php if(is_active('dashboard')) {echo 'active-pg';}?>">Match Dashboard</a>

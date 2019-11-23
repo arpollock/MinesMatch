@@ -2,6 +2,7 @@
     $current_page = "other_profile";
     $path_to_home = "./";
     $uid = $_REQUEST["uid"];
+    $is_pending = $_REQUEST["p"]; // TODO: change from query param to either (1) use cookie from below TODO OR (2) lookup match state in DB
     // TODO: query sql for first and last name from uid
     // ... and all other profile info
 ?>
@@ -24,9 +25,9 @@
             <section class="about-wrapper">
                 <img class="profile-pic" src="./images/user.png" style="max-width: 200px; height: auto;"/>
                 <div class="about-text">
-                    <div class="match-wrapper">
+                    <div class="title-wrapper">
                         <h2><?php echo $uid?>'s profile</h2>
-                        <div id="match-buttons">
+                        <div id="match-buttons" <?php if ($is_pending=='0') { echo 'style="display: none;"'; } ?> > <!-- TODO: have actual boolean or int check here -->
                             <div id="match-yes">Yes &lt;3</div>
                             <div id="match-no">No &lt;/3</div>
                         </div>
