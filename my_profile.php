@@ -18,14 +18,20 @@
         <!-- This content is seen on the main viewport -->
         <?php include './templateHeader.php'; ?>
         <section class="main-content">
-            
             <section class="about-wrapper">
-                <img class="profile-pic" src="./images/user.png" style="max-width: 33vw; height: auto;"/>
+                <img class="profile-pic" src="./images/user.png" style="max-width: 200px; height: auto;"/>
                 <div class="about-text">
                     <h2>My Profile</h2>
-                    <p>This is my main bio blurb!</p>
+                    <p class="gen-info">M/F | my gender</p>
+                    <p class="gen-info">My Major | Class of 20##</p>
+                    <p>This is my main bio blurb! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+                </div>          
+            </section>
+            <section class="all-questions">
+                <div class="question-wrapper">
+                    <h3>This is the question?</h3>
+                    <p>This is the answer.</p>
                 </div>
-                
             </section>
         </section>
         <?php include './templateFooter.php'; ?>
