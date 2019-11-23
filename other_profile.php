@@ -31,12 +31,15 @@
                             <div id="match-yes">Yes &lt;3</div>
                             <div id="match-no">No &lt;/3</div>
                         </div>
+                        <div class="love" <?php if ($is_pending!='0') { echo 'style="display: none;"'; } ?> >Matched!</div>
                     </div>
+                    <hr/>
                     <p class="gen-info">M/F | my gender</p>
                     <p class="gen-info">My Major | Class of 20##</p>
                     <p>This is my main bio blurb! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
                 </div>          
             </section>
+            <hr/>
             <section class="all-questions">
                 <div class="question-wrapper">
                     <h3>This is the question?</h3>

@@ -3,6 +3,10 @@
     padding-right: var(--padding);
     padding-top: var(--padding);
 }
+h2:first-of-type {
+    margin-bottom: calc(var(--padding) / 2);
+    margin-top: calc(var(--padding) / 2);
+}
 .about-wrapper {
     display: flex;
     flex-direction: row;
@@ -41,4 +45,14 @@
 #match-buttons>#match-no{
     background-color: #ff6b81;
     border-radius: 0 var(--border-rad) var(--border-rad) 0;
+}
+hr {
+    border: 2px solid var(--secondary-bg-color);
+}
+.love {
+    background-color: var(--main-pop-color);
+    color: var(--main-text-color);
+    padding: calc(var(--padding) / 2);
+    border-radius: var(--border-rad);
+    cursor: default;
 }

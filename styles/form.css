@@ -9,6 +9,12 @@
     margin-top: var(--padding);
     margin-bottom: var(--padding);
 }
+#edit_preferences>fieldset:nth-child(odd) {
+    border: 2px solid var(--main-pop-color);
+}
+#edit_preferences>fieldset:nth-child(even) {
+    border: 2px solid var(--secondary-bg-color);
+}
 #edit_preferences .flex-input {
     justify-content: flex-start;
     width: 100%;

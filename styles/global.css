@@ -70,3 +70,6 @@ footer {
 .flex-input>input {
     flex-grow: 10;
 }
+.error {
+    color: var(--error-color);
+}
