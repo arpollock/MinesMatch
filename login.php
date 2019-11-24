@@ -48,7 +48,7 @@
                     </div>
 					<span class="error">* <?php /* TODO */?></span>
 					<br>
-                    <input type="submit" name="register" value="register" class="submit-login"/>
+                    <input type="submit" name="register" value="register" class="submit-login button"/>
 				</form>
 				
                 <form id="returning_user" action="process_login.php" method="POST">

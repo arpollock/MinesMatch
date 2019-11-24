@@ -32,6 +32,7 @@
                             <div id="match-no">No &lt;/3</div>
                         </div>
                         <div class="love" <?php if ($is_pending!='0') { echo 'style="display: none;"'; } ?> >Matched!</div>
+                        <!-- TODO: maybe this is a mailto click of their email? -->
                     </div>
                     <hr/>
                     <p class="gen-info">M/F | my gender</p>
