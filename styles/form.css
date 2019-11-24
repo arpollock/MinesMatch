@@ -9,6 +9,9 @@
     margin-top: var(--padding);
     margin-bottom: var(--padding);
 }
+#edit_preferences>fieldset {
+    padding: var(--padding);
+}
 #edit_preferences>fieldset:nth-child(odd) {
     border: 2px solid var(--main-pop-color);
 }
@@ -21,4 +24,9 @@
 }
 #edit_preferences .flex-input>input:not(:last-child) {
     margin-right: calc(var(--padding) / 2);
+}
+textarea {
+    width: 100%;
+    min-height: 50px;
+    resize: none;
 }

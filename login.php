@@ -25,7 +25,7 @@
 		  <!-- This content is seen on the main viewport -->
         <section class="main-content">
             <div class="login-form">
-                <div id="toggle-login" onclick="toggle_login()">Sign Up</div>
+                <div id="toggle-login" class="button" onclick="toggle_login()">Sign Up</div>
                 <h1>Welcome to Mines Match!</h1>
                 <p>The online dating service for geeks, by geeks.</p>
 				
@@ -64,7 +64,7 @@
                     </div>
                     <span class="error">* <?php /* TODO */?></span>
                     <br/>
-                    <input type="submit" name="submit" value="Login" class="submit-login"/>
+                    <input type="submit" name="submit" value="Login" class="submit-login button"/>
                 </form>
 			</div>
         </section>

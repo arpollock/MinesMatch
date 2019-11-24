@@ -29,14 +29,6 @@ body {
 .submit-login {
     min-width: 33%;
 }
-.submit-login, #toggle-login {
-    background-color: var(--main-pop-color);
-    border: none;
-    padding: 5px;
-    color: var(--main-bg-color);
-    cursor: pointer;
-    border-radius: var(--border-rad);
-}
 #toggle-login {
     position: absolute;
     top: var(--padding);

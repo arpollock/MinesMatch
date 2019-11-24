@@ -23,7 +23,7 @@
                 <div class="about-text">
                     <div class="title-wrapper">
                         <h2>My Profile</h2>
-                        <button id="edit-preferences" onclick="location.href='./edit_profile.php'">Edit My Profile</button>
+                        <button id="edit-preferences" onclick="location.href='./edit_profile.php'" class="button">Edit My Profile</button>
                     </div>
                     <hr/>
                     <p class="gen-info">M/F | my gender</p>

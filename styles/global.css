@@ -73,3 +73,11 @@ footer {
 .error {
     color: var(--error-color);
 }
+.button {
+    background-color: var(--main-pop-color);
+    border: none;
+    padding: 5px;
+    color: var(--main-bg-color);
+    cursor: pointer;
+    border-radius: var(--border-rad);
+}
