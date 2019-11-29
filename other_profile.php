@@ -28,7 +28,7 @@
         <?php include './templateHeader.php'; ?>
         <section class="main-content">
             <section class="about-wrapper">
-                <img class="profile-pic" src="./images/user.png" style="max-width: 200px; height: auto;"/>
+                <img class="profile-pic" src="./images/user.png" style="max-width: 200px; height: auto;" alt="Their profile pic."/>
                 <div class="about-text">
                     <div class="title-wrapper">
                         <h2><?php echo $uid?>'s profile</h2>

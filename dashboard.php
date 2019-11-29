@@ -20,6 +20,7 @@
         <!-- This content is seen on the main viewport -->
         <?php include './templateHeader.php'; ?>
         <section class="main-content">
+            <h2 style="display: none;">Dashboard Tabs</h2>
             <!-- TODO: store cookies here so can do "Back to Pending/Successful Matches"-->
             <section class="tab-wrapper">
                 <div class="tab-header">

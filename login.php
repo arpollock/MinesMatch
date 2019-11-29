@@ -44,7 +44,7 @@
                     <br/>
 					<div class="flex-input">
                         <label for="confirm_password">Confirm Password: </label>
-                        <input type="confirm_password" name="confirm_password" id="confirm_password" class="login-text-input" placeholder="Enter password" required>
+                        <input type="password" name="confirm_password" id="confirm_password" class="login-text-input" placeholder="Enter password" required>
                     </div>
 					<span class="error">* <?php /* TODO */?></span>
 					<br>
