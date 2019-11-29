@@ -2,7 +2,10 @@
     $current_page = "other_profile";
     $path_to_home = "./";
     $uid = $_REQUEST["uid"];
+    $my_match_userid = 2; // TODO: assign if the user's uid is in the 1 or 2 slot in db
+    $their_match_userid = 1; // TODO: assign if their match's uid is in the 1 or 2 slot in db
     $is_pending = $_REQUEST["p"]; // TODO: change from query param to either (1) use cookie from below TODO OR (2) lookup match state in DB
+    $is_pending = intval($is_pending);
     // TODO: query sql for first and last name from uid
     // ... and all other profile info
 ?>
@@ -17,6 +20,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="./styles/global.css">
         <link rel="stylesheet" type="text/css" href="./styles/profile.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="./scripts/profile.js"></script>
     </head>
     <body>
         <!-- This content is seen on the main viewport -->
@@ -27,12 +32,13 @@
                 <div class="about-text">
                     <div class="title-wrapper">
                         <h2><?php echo $uid?>'s profile</h2>
-                        <div id="match-buttons" <?php if ($is_pending=='0') { echo 'style="display: none;"'; } ?> > <!-- TODO: have actual boolean or int check here -->
-                            <div id="match-yes">Yes &lt;3</div>
-                            <div id="match-no">No &lt;/3</div>
+                        <div id="match-buttons" <?php if ( $is_pending!=0 && $is_pending!=$my_match_userid ) { echo 'style="display: none;"'; } ?> >
+                            <div id="match-yes" onclick="match(true)">Yes &lt;3</div>
+                            <div id="match-no" onclick="match(false)">No &lt;/3</div>
                         </div>
-                        <div class="love" <?php if ($is_pending!='0') { echo 'style="display: none;"'; } ?> >Matched!</div>
                         <!-- TODO: maybe this is a mailto click of their email? -->
+                        <div class="love" <?php if ($is_pending!=3) { echo 'style="display: none;"'; } ?> >Matched!</div>
+                        <div class="love" id="waiting" <?php if ($is_pending==$their_match_userid) { echo 'style="display: inline-block;"'; } ?> >Waiting for <?php echo $uid?>'s Response...</div>
                     </div>
                     <hr/>
                     <p class="gen-info">M/F | my gender</p>

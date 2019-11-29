@@ -5,7 +5,12 @@ when user is created:
     append to preferences table
     
  when user clicks on matches:
-    search matches for u1_id and if status == 3 display as match, if status == 2 display as pending
+    search matches for u1_id and
+      if status == 3 display as match,
+      if status == 2 display as pending on u2_id,
+      if status == 1 is waiting on u1_id,
+      if status == 0 is waiting on both
+      if status == -1 is rejected by either
     
 when user clicks on a matched user:
     display user2 info plus preference info

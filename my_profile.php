@@ -13,6 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="./styles/global.css">
         <link rel="stylesheet" type="text/css" href="./styles/profile.css">
+        <script src="./scripts/profile.js"></script>
     </head>
     <body>
         <!-- This content is seen on the main viewport -->

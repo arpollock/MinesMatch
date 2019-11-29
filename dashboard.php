@@ -37,11 +37,11 @@
                            <th>First Name</th>
                            <th>Last Name</th> 
                         </tr>
-                        <tr onclick="window.location='./other_profile.php?uid=123&p=1';"> 
+                        <tr onclick="window.location='./other_profile.php?uid=123&p=0';"> 
                            <td>John</td>
                            <td>Doe</td> 
                         </tr>
-                        <tr onclick="window.location='./other_profile.php?uid=456&p=1';">
+                        <tr onclick="window.location='./other_profile.php?uid=456&p=0';">
                            <td>Foo</td>
                            <td>Blah</td> 
                         </tr>
@@ -54,11 +54,11 @@
                            <th>First Name</th>
                            <th>Last Name</th> 
                         </tr>
-                        <tr onclick="window.location='./other_profile.php?uid=789&p=0';"> 
+                        <tr onclick="window.location='./other_profile.php?uid=789&p=3';"> 
                            <td>Al</td>
                            <td>Dog</td> 
                         </tr>
-                        <tr onclick="window.location='./other_profile.php?uid=666&p=0';">
+                        <tr onclick="window.location='./other_profile.php?uid=666&p=3';">
                            <td>Snoop</td>
                            <td>Dog</td> 
                         </tr>
