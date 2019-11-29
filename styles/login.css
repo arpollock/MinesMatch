@@ -38,6 +38,12 @@ body {
 .login-form>form>*:not(:last-child) {
     margin-bottom: calc(var(--padding) / 2);
 }
+
+span.error {
+	margin: 10px;
+	padding: 10px;
+}
+
 #login_error {
 	color: var(--error-color);
 }
