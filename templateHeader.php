@@ -1,4 +1,6 @@
-<header>
+<header style="background-image: url(<?php
+    echo($path_to_home . 'images/header_bg_grad.png');
+?>);">
     <h1 onclick="location.href='./dashboard.php'">Mines Match</h1>
     <p>The online dating service for geeks, by geeks.</p>
     <nav>

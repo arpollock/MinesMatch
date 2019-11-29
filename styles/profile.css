@@ -39,12 +39,20 @@ h2:first-of-type {
     cursor: pointer;
 }
 #match-buttons>#match-yes{
-    background-color: #b8e994;
+    background-color: var(--main-pos-color);
     border-radius: var(--border-rad) 0 0 var(--border-rad);
 }
+#match-buttons>#match-yes:hover{
+    background-color: var(--secondary-pos-color);
+    color: var(--main-text-color);
+}
 #match-buttons>#match-no{
-    background-color: #ff6b81;
+    background-color: var(--main-neg-color);
     border-radius: 0 var(--border-rad) var(--border-rad) 0;
+}
+#match-buttons>#match-no:hover{
+    background-color: var(--secondary-neg-color);
+    color: var(--main-text-color);
 }
 hr {
     border: 2px solid var(--secondary-bg-color);
