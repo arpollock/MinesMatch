@@ -1,10 +1,15 @@
 body {
     --main-bg-color: #2c2c54;
     --secondary-bg-color: #40407a;
+    --ternary-bg-color: #B8D9F4;
     --main-text-color: #ffffff;
-    --secondary-text-color: #dcdde1;
-    --main-pop-color: #ff5252;
-    --secondary-pop-color: #b33939;
+    --secondary-text-color: #a5b1c2;
+    --main-pop-color: #cf6a87; /* #ff5252; */
+    --secondary-pop-color: #892b46; /* #b33939; */
+    --main-pos-color: #87c16e;
+    --secondary-pos-color: #5c9842;
+    --main-neg-color: #cf6a87;
+    --secondary-neg-color: #892b46;
     --padding: 20px;
     --border-rad: 5px;
     --footer-height: 80px;
@@ -16,9 +21,17 @@ body {
     min-height: 100vh;
     position: relative;
 }
+header {
+    background-color: var(#ccccff);
+    color: var(--main-bg-color);
+    background-position: center center;
+    background-size: cover;
+}
 header, footer {
-    background-color: var(--main-bg-color);
     padding: var(--padding);
+}
+footer {
+    background-color: var(--main-bg-color);
     color: var(--main-text-color);
 }
 header p:first-of-type {
@@ -27,18 +40,18 @@ header p:first-of-type {
 header a {
     display: inline-block;
     cursor: pointer;
-    color: var(--main-text-color);
+    color: var(--main-pop-color);
     text-decoration: none;
 }
 header .active-pg {
-    color: var(--secondary-text-color);
+    color: var(--secondary-pop-color);
 }
 header .active-pg:hover {
-    color: var(--secondary-text-color);
+    color: var(--secondary-pop-color);
     cursor: default;
 }
 header a:hover {
-    color: var(--main-pop-color);
+    color: var(--secondary-pop-color);
 }
 header a:not(:last-child) {
     margin-right: var(--padding);
@@ -75,9 +88,14 @@ footer {
 }
 .button {
     background-color: var(--main-pop-color);
-    border: none;
+    border: 1px solid var(--main-pop-color);
     padding: 5px;
-    color: var(--main-bg-color);
+    color: var(--main-text-color);
     cursor: pointer;
     border-radius: var(--border-rad);
+}
+.button:hover {
+    background-color: var(--secondary-pop-color);
+    box-shadow: 0 0 5px var(--ternary-bg-color);
+    border: 1px solid var(--ternary-bg-color);
 }

@@ -149,7 +149,7 @@
                     </div>
 					<span class="error">* <?php echo $message ?></span>
 					<br>
-                    <input type="submit" name="register" value="register" class="submit-login button"/>
+                    <input type="submit" name="register" value="Register" class="submit-login button"/>
 				</form>
 				
                 <form id="returning_user" method="POST">

@@ -1,18 +1,24 @@
 .tab-header {
     width: 100%;
     display: block;
-    background-color: var(--main-pop-color);
+    background-color: var(--main-bg-color);
 }
 .tab-header>.tab-item {
     display: inline-block;
-    color: var(--main-bg-color);
+    color: var(--main-text-color);
     padding: var(--padding);
     cursor: pointer;
 }
+.tab-header>.tab-item:hover {
+    color: var(--main-pop-color);
+}
 .tab-header>.tab-item-active{
-    background-color: var(--secondary-bg-color);
+    background-color: var(--main-pop-color);
     color: var(--main-text-color);
     cursor: default;
+}
+.tab-header>.tab-item-active:hover{
+    color: var(--main-text-color);
 }
 .tab-content {
     padding: var(--padding);
@@ -20,22 +26,26 @@
 .match-table {
     width: 100%;
     border-collapse: collapse;
-    border: 1px solid var(--main-bg-color);
+    border: 1px solid var(--secondary-pop-color);
 }
 .match-table tr {
-    border: 1px solid var(--main-bg-color);
-    background-color: var(--main-bg-color);
+    border: 1px solid var(--secondary-pop-color);
+    background-color: var(--main-pop-color);
     color: var(--main-text-color);
 }
 .match-table tr:nth-child(odd) {
-    background-color: var(--secondary-bg-color);
+    background-color: var(--secondary-pop-color);
 }
 .match-table tr:first-child {
-    border: 1px double var(--main-bg-color);
-    background-color: var(--main-pop-color);
+    border: 1px double var(--secondary-pop-color);
+    background-color: var(--main-bg-color);
 }
 .match-table tr:not(:first-child) {
     cursor: pointer;
+}
+.match-table tr:hover:not(:first-child) {
+    background-color: var(--ternary-bg-color);
+    color: var(--main-bg-color);
 }
 .match-table td, .match-table th {
     padding: calc(var(--padding) / 2);
