@@ -13,13 +13,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="./styles/global.css">
         <link rel="stylesheet" type="text/css" href="./styles/profile.css">
+        <script src="./scripts/profile.js"></script>
     </head>
     <body>
         <!-- This content is seen on the main viewport -->
         <?php include './templateHeader.php'; ?>
         <section class="main-content">
             <section class="about-wrapper">
-                <img class="profile-pic" src="./images/user.png" style="max-width: 200px; height: auto;"/>
+                <img class="profile-pic" src="./images/user.png" style="max-width: 200px; height: auto;" alt="My profile pic."/>
                 <div class="about-text">
                     <div class="title-wrapper">
                         <h2>My Profile</h2>

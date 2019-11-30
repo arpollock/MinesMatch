@@ -10,7 +10,7 @@ body {
 }
 .login-form {
     display: block;
-    width: 33%;
+    width: 67%;
     height: auto;
     min-height: 33vh;
     margin: auto;
@@ -60,4 +60,8 @@ span.error {
 	box-shadow: 0 5px #666;
 	transform: translateY(4px);
 	color: var(--main-pop-color);
+}
+input {
+    border-radius: var(--border-rad);
+    padding: calc(var(--padding) / 2);
 }

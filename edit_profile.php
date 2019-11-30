@@ -31,7 +31,7 @@
                     <label for="male">Male</label> <!--TODO: should we technically get this from SQl--> <!-- could do this generation in a loop but is it actually easier or just less code?? -->
                     <br/>
                     <input type="radio" name="gender" id="female" class="pinfo-input" value="female"/>
-                    <label for="male">Female</label>
+                    <label for="female">Female</label>
                     <br/>
                     <input type="radio" name="gender" id="nb" class="pinfo-input" value="nb"/>
                     <label for="nb">Non-binary</label>
@@ -118,59 +118,59 @@
 
                     <span>What majors are you interested in?</span><span class="error"> * Required</span>
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="math" class="pinfo-input" value="math"/>
-                    <label for="math">Applied Mathematics and Statistics</label> <!--TODO: should we technically get this from SQl--> <!-- could do this generation in a loop but is it actually easier or just less code?? -->
+                    <input type="checkbox" name="majors_pref" id="math_pref" class="pinfo-input" value="math"/>
+                    <label for="math_pref">Applied Mathematics and Statistics</label> <!--TODO: should we technically get this from SQl--> <!-- could do this generation in a loop but is it actually easier or just less code?? -->
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="biochem" class="pinfo-input" value="biochem"/>
-                    <label for="biochem">Biochemistry</label>
+                    <input type="checkbox" name="majors_pref" id="biochem_pref" class="pinfo-input" value="biochem"/>
+                    <label for="biochem_pref">Biochemistry</label>
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="cheme" class="pinfo-input" value="cheme"/>
-                    <label for="cheme">Chemical Engineering</label>
+                    <input type="checkbox" name="majors_pref" id="cheme_pref" class="pinfo-input" value="cheme"/>
+                    <label for="cheme_pref">Chemical Engineering</label>
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="chem" class="pinfo-input" value="chem"/>
-                    <label for="chem">Chemistry</label>
+                    <input type="checkbox" name="majors_pref" id="chem_pref" class="pinfo-input" value="chem"/>
+                    <label for="chem_pref">Chemistry</label>
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="civil" class="pinfo-input" value="civil"/>
-                    <label for="civil">Civil Engineering</label>
+                    <input type="checkbox" name="majors_pref" id="civil_pref" class="pinfo-input" value="civil"/>
+                    <label for="civil_pref">Civil Engineering</label>
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="compsci" class="pinfo-input" value="compsci"/>
-                    <label for="compsci">Computer Science</label> 
+                    <input type="checkbox" name="majors_pref" id="compsci_pref" class="pinfo-input" value="compsci"/>
+                    <label for="compsci_pref">Computer Science</label> 
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="econ" class="pinfo-input" value="econ"/>
-                    <label for="econ">Economics</label> 
+                    <input type="checkbox" name="majors_pref" id="econ_pref" class="pinfo-input" value="econ"/>
+                    <label for="econ_pref">Economics</label> 
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="electrical" class="pinfo-input" value="electrical"/>
-                    <label for="electrical">Electrical Engineering</label> 
+                    <input type="checkbox" name="majors_pref" id="electrical_pref" class="pinfo-input" value="electrical"/>
+                    <label for="electrical_pref">Electrical Engineering</label> 
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="engineering" class="pinfo-input" value="engineering"/>
-                    <label for="engineering">Engineering</label> 
+                    <input type="checkbox" name="majors_pref" id="engineering_pref" class="pinfo-input" value="engineering"/>
+                    <label for="engineering_pref">Engineering</label> 
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="physics" class="pinfo-input" value="physics"/>
-                    <label for="physics">Engineering Physics</label> 
+                    <input type="checkbox" name="majors_pref" id="physics_pref" class="pinfo-input" value="physics"/>
+                    <label for="physics_pref">Engineering Physics</label> 
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="enviro" class="pinfo-input" value="enviro"/>
-                    <label for="enviro">Environmental Engineering</label> 
+                    <input type="checkbox" name="majors_pref" id="enviro_pref" class="pinfo-input" value="enviro"/>
+                    <label for="enviro_pref">Environmental Engineering</label> 
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="geo" class="pinfo-input" value="geo"/>
-                    <label for="geo">Geological Engineering</label> 
+                    <input type="checkbox" name="majors_pref" id="geo_pref" class="pinfo-input" value="geo"/>
+                    <label for="geo_pref">Geological Engineering</label> 
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="geophys" class="pinfo-input" value="geophys"/>
-                    <label for="geophys">Geophysical Engineering</label> 
+                    <input type="checkbox" name="majors_pref" id="geophys_pref" class="pinfo-input" value="geophys"/>
+                    <label for="geophys_pref">Geophysical Engineering</label> 
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="hass" class="pinfo-input" value="hass"/>
-                    <label for="hass">Humanities, Arts, &amp; Social Sciences</label> 
+                    <input type="checkbox" name="majors_pref" id="hass_pref" class="pinfo-input" value="hass"/>
+                    <label for="hass_pref">Humanities, Arts, &amp; Social Sciences</label> 
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="meche" class="pinfo-input" value="meche"/>
-                    <label for="meche">Mechanical Engineering</label> 
+                    <input type="checkbox" name="majors_pref" id="meche_pref" class="pinfo-input" value="meche"/>
+                    <label for="meche_pref">Mechanical Engineering</label> 
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="mme" class="pinfo-input" value="mme"/>
-                    <label for="mme">Metallurgical &amp; Materials Engineering</label> 
+                    <input type="checkbox" name="majors_pref" id="mme_pref" class="pinfo-input" value="mme"/>
+                    <label for="mme_pref">Metallurgical &amp; Materials Engineering</label> 
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="mining" class="pinfo-input" value="mining"/>
-                    <label for="mining">Mining Engineering</label> 
+                    <input type="checkbox" name="majors_pref" id="mining_pref" class="pinfo-input" value="mining"/>
+                    <label for="mining_pref">Mining Engineering</label> 
                     <br/>
-                    <input type="checkbox" name="majors_pref" id="petro" class="pinfo-input" value="petro"/>
-                    <label for="petro">Petroleum Engineering</label> 
+                    <input type="checkbox" name="majors_pref" id="petro_pref" class="pinfo-input" value="petro"/>
+                    <label for="petro_pref">Petroleum Engineering</label> 
                     <br/>
                     <br/>
 
@@ -195,20 +195,20 @@
 
                     <span>What graduation years are you interested in?</span><span class="error"> * Required</span>
                     <br/>
-                    <input type="checkbox" name="grad_year_pref" id="2020" class="pinfo-input" value="2020"/>
-                    <label for="2020">2020</label> 
+                    <input type="checkbox" name="grad_year_pref" id="2020_pref" class="pinfo-input" value="2020"/>
+                    <label for="2020_pref">2020</label> 
                     <br/>
-                    <input type="checkbox" name="grad_year_pref" id="2021" class="pinfo-input" value="2021"/>
-                    <label for="2021">2021</label> 
+                    <input type="checkbox" name="grad_year_pref" id="2021_pref" class="pinfo-input" value="2021"/>
+                    <label for="2021_pref">2021</label> 
                     <br/>
-                    <input type="checkbox" name="grad_year_pref" id="2022" class="pinfo-input" value="2022"/>
-                    <label for="2022">2022</label> 
+                    <input type="checkbox" name="grad_year_pref" id="2022_pref" class="pinfo-input" value="2022"/>
+                    <label for="2022_pref">2022</label> 
                     <br/>
-                    <input type="checkbox" name="grad_year_pref" id="2023" class="pinfo-input" value="2023"/>
-                    <label for="2023">2023</label> 
+                    <input type="checkbox" name="grad_year_pref" id="2023_pref" class="pinfo-input" value="2023"/>
+                    <label for="2023_pref">2023</label> 
                     <br/>
-                    <input type="checkbox" name="grad_year_pref" id="2024" class="pinfo-input" value="2024"/>
-                    <label for="2024">2024</label> 
+                    <input type="checkbox" name="grad_year_pref" id="2024_pref" class="pinfo-input" value="2024"/>
+                    <label for="2024_pref">2024</label> 
 
                 </fieldset>
                 <fieldset>
@@ -216,19 +216,19 @@
 
                     <label for="ideal_date">What is your ideal date?</label>
                     <br/>
-                    <textarea type="text" name="ideal_date" id="ideal_date" class="pinfo-input" value="<?php echo $ideal_date;?>"></textarea>
+                    <textarea name="ideal_date" id="ideal_date" class="pinfo-input"></textarea>
                     <br/>
                     <br/>
 
                     <label for="nerdiness">What is your nerdiest characteristic?</label>
                     <br/>
-                    <textarea type="text" name="nerdiness" id="nerdiness" class="pinfo-input" value="<?php echo $nerdiness;?>"></textarea>
+                    <textarea name="nerdiness" id="nerdiness" class="pinfo-input"></textarea>
                     <br/>
                     <br/>
 
                     <label for="place">What is your favorite place in Golden?</label>
                     <br/>
-                    <textarea type="text" name="place" id="place" class="pinfo-input" value="<?php echo $place;?>"></textarea>
+                    <textarea name="place" id="place" class="pinfo-input"></textarea>
                 
                 </fieldset>
                 <div class="preference-buttons">

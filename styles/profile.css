@@ -64,3 +64,6 @@ hr {
     border-radius: var(--border-rad);
     cursor: default;
 }
+#waiting {
+    display: none;
+}

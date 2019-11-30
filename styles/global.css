@@ -4,8 +4,8 @@ body {
     --ternary-bg-color: #B8D9F4;
     --main-text-color: #ffffff;
     --secondary-text-color: #a5b1c2;
-    --main-pop-color: #cf6a87; /* #ff5252; */
-    --secondary-pop-color: #892b46; /* #b33939; */
+    --main-pop-color: #cf6a87;
+    --secondary-pop-color: #892b46;
     --main-pos-color: #87c16e;
     --secondary-pos-color: #5c9842;
     --main-neg-color: #cf6a87;
@@ -17,12 +17,12 @@ body {
 	--button-font-size: 24px;
     padding: 0;
     margin: 0;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
     min-height: 100vh;
     position: relative;
 }
 header {
-    background-color: var(#ccccff);
+    background-color: var(--ternary-bg-color);
     color: var(--main-bg-color);
     background-position: center center;
     background-size: cover;
@@ -75,7 +75,8 @@ footer {
     width: 80%;
     display: flex;
     flex-direction: row;
-    align-content: space-between;
+    justify-content: space-between;
+    align-items: center;
 }
 .flex-input>label {
     margin-right: 5px;
