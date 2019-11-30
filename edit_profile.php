@@ -1,7 +1,9 @@
 <?php
     $current_page = "edit_profile";
     $path_to_home = "./";
+	
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>  

@@ -11,7 +11,9 @@
 ?>
 
 <?php
-	include "databse_conn.php";
+	include('databse_conn.php');
+	
+	
 	// checking cookie
 	if(isset($_COOKIE["type"])) {
 		header("./dashboard.php");
@@ -34,7 +36,7 @@
 		// Select from DB with prepared statements to see if valid user
 		$stmt = $conn->prepare("Select * from login where email = ?");
 		$stmt->bind_param("s", $email);
-		$stmt->execute() or die("Failed to login!");
+		$stmt->execute();
 		$result = $stmt->get_result();
 		$count = mysqli_num_rows($result);
 		
@@ -58,37 +60,30 @@
 	
 	// Register component!
 	if(isset($_POST['register'])){
+		$password = $_POST['password'];
+		$confirm_password = $_POST['confirm_password'];
 		$firstName = $_POST['first'];
 		$lastName = $_POST['last'];
 		$email = $_POST['email'];
-		$password = $_POST['password'];
-		$confirm_password = $_POST['confirm_password'];
-		
-		if(!$conn){
-			echo "I mean what the fuck man";
-			die("Fuck your life");
-		}
 		
 		if($password == $confirm_password){
-			header('Location: ./edit_profile.php');
 			
 			// Create the new user and add them into the user database
-			$sql = "INSERT INTO user(first, last) VALUES(?, ?)";
-			$stmt = mysqli_prepare($sql);
+			$stmt = $conn->prepare("INSERT INTO user(first_name, last_name) VALUES(?, ?)");
 			$stmt->bind_param("ss", $firstName, $lastName);
-			$stmt->execute() or die("Failed to add you!");
+			$stmt->execute();
 			
-			$stmt = $conn->prepare("SELECT user_id FROM user WHERE first = ? AND last = ?");
-			$stmt->bind_param("ss", $firstName, $lastName);
-			$stmt->execute() or die("Failed to add you!");
-			$result = $stmt->get_result();
+			$stmt2 = $conn->prepare("SELECT user_id FROM user WHERE first_name = ? AND last_name = ?");
+			$stmt2->bind_param("ss", $firstName, $lastName);
+			$stmt2->execute();
+			$result = $stmt2->get_result();
 			$row = $result->fetch_assoc();
 			$userID = $row['user_id'];
 			
 			// Add the rest of their information into the login so they can get back in
-			$stmt = $conn->prepare("INSERT INTO login(user_id, email, passowrd) VALUES (?, ?)");
-			$stmt->bind_param("sss", $user_id, $email, $password);
-			$stmt->execute() or die("Failed to add you!");
+			$stmt3 = $conn->prepare("INSERT INTO login(user_id, email, password) VALUES (?, ?, ?)");
+			$stmt3->bind_param("iss", $user_id, $email, $password);
+			$stmt3->execute();
 			
 			setcookie($userID, time()+3600);
 			header('Location: ./edit_profile.php');
