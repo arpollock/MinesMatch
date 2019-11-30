@@ -4,6 +4,11 @@
 	$process_login = "./process_login.php";
 	$new_user;
 ?>
+<?php 
+	$userID = $_POST['userID'];
+	setcookie($userID, time()-3600);
+	header("location: ./login.php");
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,11 +34,6 @@
 	</body>
 </html>
 
-<?php 
-	$userID = $_POST['userID'];
-	setcookie($userID, time()-3600);
-	header("location: ./login.php");
-?>
 
 
  

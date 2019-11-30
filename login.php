@@ -7,6 +7,8 @@
 	$userID;
 	$new_user;
 	$message = "";
+	$cookieName = "user";
+	$cookieValue;
 	
 ?>
 
@@ -82,10 +84,11 @@
 			
 			// Add the rest of their information into the login so they can get back in
 			$stmt3 = $conn->prepare("INSERT INTO login(user_id, email, password) VALUES (?, ?, ?)");
-			$stmt3->bind_param("iss", $user_id, $email, $password);
+			$stmt3->bind_param("iss", $row['user_id'], $email, $password);
 			$stmt3->execute();
 			
-			setcookie($userID, time()+3600);
+			$cookieValue = $row['user_id'];
+			setcookie($cookieName, $cookieVallue, time()+3600, "/");
 			header('Location: ./edit_profile.php');
 		}
 		else {

@@ -1,5 +1,5 @@
 <?php
-<<<<<<< HEAD
+
 	// Morgan Data base connection
 
 	// Data base connection
