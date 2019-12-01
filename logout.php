@@ -2,12 +2,14 @@
     $current_page = "login";
     $path_to_home = "./";
 	$process_login = "./process_login.php";
-	$new_user;
+	$cookieName = "user";
 ?>
 <?php 
+
 	$userID = $_POST['userID'];
-	setcookie($userID, time()-3600);
-	header("location: ./login.php");
+	
+	setcookie($cookieName, $userID, time()-3600);
+
 ?>
 
 <!DOCTYPE html>
@@ -31,6 +33,10 @@
     </head>
 		
 	<body onload="logout()">
+	<?php
+		header("location: ./login.php");
+		exit();
+	?>
 	</body>
 </html>
 

@@ -17,8 +17,8 @@
 	
 	
 	// checking cookie
-	if(isset($_COOKIE["type"])) {
-		header("./dashboard.php");
+	if(!isset($_COOKIE["user"])) {
+		header("./login.php");
 	}
 	
 	if(isset($_POST['submit'])) {
@@ -47,7 +47,7 @@
 			while($row = $result->fetch_assoc()){
 				if(($password == $row['password'])){
 					$userID = $row['user_id'];
-					setcookie($userID, time()+3600);
+					setcookie($cookieName, $userID, time()+3600);
 					header('Location: ./dashboard.php');
 				}
 				else {
@@ -68,31 +68,44 @@
 		$lastName = $_POST['last'];
 		$email = $_POST['email'];
 		
-		if($password == $confirm_password){
-			
-			// Create the new user and add them into the user database
-			$stmt = $conn->prepare("INSERT INTO user(first_name, last_name) VALUES(?, ?)");
-			$stmt->bind_param("ss", $firstName, $lastName);
-			$stmt->execute();
-			
-			$stmt2 = $conn->prepare("SELECT user_id FROM user WHERE first_name = ? AND last_name = ?");
-			$stmt2->bind_param("ss", $firstName, $lastName);
-			$stmt2->execute();
-			$result = $stmt2->get_result();
-			$row = $result->fetch_assoc();
-			$userID = $row['user_id'];
-			
-			// Add the rest of their information into the login so they can get back in
-			$stmt3 = $conn->prepare("INSERT INTO login(user_id, email, password) VALUES (?, ?, ?)");
-			$stmt3->bind_param("iss", $row['user_id'], $email, $password);
-			$stmt3->execute();
-			
-			$cookieValue = $row['user_id'];
-			setcookie($cookieName, $cookieVallue, time()+3600, "/");
-			header('Location: ./edit_profile.php');
+		// Making sure email is not already taken!
+		$stmt = $conn->prepare("SELECT * from login WHERE email = ?");
+		$stmt->bind_param("s", $email);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		$count = mysqli_num_rows($result);
+		
+		if($count > 0){
+			$message = "That email already has an account";
 		}
 		else {
-			$message = "Passwords did not match!";
+		
+			if($password == $confirm_password){
+				
+				// Create the new user and add them into the user database
+				$stmt = $conn->prepare("INSERT INTO user(first_name, last_name) VALUES(?, ?)");
+				$stmt->bind_param("ss", $firstName, $lastName);
+				$stmt->execute();
+				
+				$stmt2 = $conn->prepare("SELECT user_id FROM user WHERE first_name = ? AND last_name = ?");
+				$stmt2->bind_param("ss", $firstName, $lastName);
+				$stmt2->execute();
+				$result = $stmt2->get_result();
+				$row = $result->fetch_assoc();
+				$userID = $row['user_id'];
+				
+				// Add the rest of their information into the login so they can get back in
+				$stmt3 = $conn->prepare("INSERT INTO login(user_id, email, password) VALUES (?, ?, ?)");
+				$stmt3->bind_param("iss", $row['user_id'], $email, $password);
+				$stmt3->execute();
+				
+				$cookieValue = $row['user_id'];
+				setcookie($cookieName, $cookieVallue, time()+3600, "/");
+				header('Location: ./edit_profile.php');
+			}
+			else {
+				$message = "Passwords did not match!";
+			}
 		}
 	}
 ?>

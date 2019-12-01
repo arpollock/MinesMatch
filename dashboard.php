@@ -1,4 +1,9 @@
 <?php
+	
+	if(!isset($_COOKIE['user'])){
+		header("location: ./login.php");
+	}
+
     $current_page = "dashboard";
     $path_to_home = "./";
 ?>

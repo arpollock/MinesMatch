@@ -1,4 +1,8 @@
 <?php
+	if(!isset($_COOKIE['user'])){
+		header("location: ./login.php");
+	}
+	
     $current_page = "my_profile";
     $path_to_home = "./";
 ?>
@@ -23,7 +27,7 @@
                 <img class="profile-pic" src="./images/user.png" style="max-width: 200px; height: auto;" alt="My profile pic."/>
                 <div class="about-text">
                     <div class="title-wrapper">
-                        <h2>My Profile</h2>
+                        <h2>Profile</h2>
                         <button id="edit-preferences" onclick="location.href='./edit_profile.php'" class="button">Edit My Profile</button>
                     </div>
                     <hr/>

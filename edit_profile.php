@@ -1,7 +1,34 @@
 <?php
+	if(!isset($_COOKIE['user'])){
+		header("location: ./login.php");
+	}
+	
     $current_page = "edit_profile";
     $path_to_home = "./";
 	
+?>
+
+
+<?php
+	// Form Validation
+	$required = array('gender', 'orientation', 'major', 'majors_pref', 'grad_year', 'grad_year_pref');
+	$error = false;
+	
+	if(isset($_POST['submit'])) {
+		foreach($required as $field) {
+			if(empty($_POST[$field])){
+				$error = true;
+			}
+		}
+		if(!$error){
+			// TODO SAVE TO DATABASE!!!
+			header('Location: ./my_profile.php');
+		}
+	}
+	
+	if(isset($_POST['cancel'])){
+		header('Location: ./my_profile.php');
+	}
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +48,12 @@
         <?php include './templateHeader.php'; ?>
         <section class="main-content">
             <h2>Edit My Profile</h2>
-            <form id="edit_preferences">
+			<?php
+				if($error){
+					echo "<p class='error'>*You did not fill in all required fields!</p>";
+				}
+			?>
+            <form id="edit_preferences" method="POST">
                 <fieldset>
                     <legend>Gender &amp; Sexual Preferences</legend>
 
@@ -232,7 +264,7 @@
                 
                 </fieldset>
                 <div class="preference-buttons">
-                    <button id="cancel" class="button">Cancel (TODO)</button>
+                    <input type="submit" id="cancel" name="cancel" class="submit-preferences button" value="Cancel"/>
                     <input type="submit" name="submit" value="Save Preferences" class="submit-preferences button"/>
                 </div>
             </form>

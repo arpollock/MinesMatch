@@ -1,4 +1,8 @@
 <?php
+	if(!isset($_COOKIE['user'])){
+		header("location: ./login.php");
+	}
+	
     $current_page = "other_profile";
     $path_to_home = "./";
     $uid = $_REQUEST["uid"];
