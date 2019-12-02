@@ -36,6 +36,7 @@
                 <div class="about-text">
                     <div class="title-wrapper">
                         <h2><?php echo $uid?>'s profile</h2>
+						<!-- TODO: Adjust the match_state in the database based on button clicked here-->
                         <div id="match-buttons" <?php if ( $is_pending!=0 && $is_pending!=$my_match_userid ) { echo 'style="display: none;"'; } ?> >
                             <div id="match-yes" onclick="match(true)">Yes &lt;3</div>
                             <div id="match-no" onclick="match(false)">No &lt;/3</div>
@@ -45,6 +46,7 @@
                         <div class="love" id="waiting" <?php if ($is_pending==$their_match_userid) { echo 'style="display: inline-block;"'; } ?> >Waiting for <?php echo $uid?>'s Response...</div>
                     </div>
                     <hr/>
+					<!-- TODO: update this from the database -->
                     <p class="gen-info">M/F | my gender</p>
                     <p class="gen-info">My Major | Class of 20##</p>
                     <p>This is my main bio blurb! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
@@ -53,6 +55,7 @@
             <hr/>
             <section class="all-questions">
                 <div class="question-wrapper">
+					<!-- popultae with their answers to questions from the database-->
                     <h3>This is the question?</h3>
                     <p>This is the answer.</p>
                 </div>

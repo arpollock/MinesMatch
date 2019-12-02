@@ -6,6 +6,8 @@
     $current_page = "edit_profile";
     $path_to_home = "./";
 	
+	include "databse_conn.php";
+	
 ?>
 
 
@@ -21,13 +23,69 @@
 			}
 		}
 		if(!$error){
-			// TODO SAVE TO DATABASE!!!
+			//$sql = "SELECT user_id FROM user WHERE "
+			$sql = "INSERT INTO preference(user_id, question_id, question_answer) VALUES(?, ?, ?)";
+			$stmt = $conn->prepare($sql);
+			$gender = 1;
+			$u1id = $_COOKIE['user'];
+			
+			$stmt->bind_param('iis', $u1id, $gender, $_POST['gender']);
+			$stmt->execute();
+			
+			$orientation = 2;
+			$stmt->bind_param('iis', $u1id, $orientation, $_POST['orientation']);
+			$stmt->execute();
+			
+			$major = 3;
+			$stmt->bind_param('iis', $u1id, $major, $_POST['major']);
+			$stmt->execute();
+			
+			$major_p = 4;
+			$stmt->bind_param('iis', $u1id, $major_p, $_POST['majors_pref']);
+			$stmt->execute();
+			
+			$grad = 5;
+			$stmt->bind_param('iis', $u1id, $grad, $_POST['grad_year']);
+			$stmt->execute();
+			
+			$grad_p = 6;
+			$stmt->bind_param('iis', $u1id, $grad_p, $_POST['grad_year_pref']);
+			$stmt->execute();
+			
+			$ideal_date_p = 7;
+			$stmt->bind_param('iis', $u1id, $ideal_date_p, $_POST['ideal_date']);
+			$stmt->execute();
+			
+			$nerd_char = 8;
+			$stmt->bind_param('iis', $u1id, $nerd_char, $_POST['nerdiness']);
+			$stmt->execute();
+			
+			$golden = 9;
+			$stmt->bind_param('iis', $u1id, $golden, $_POST['place']);
+			$stmt->execute();
+			
 			header('Location: ./my_profile.php');
 		}
 	}
 	
 	if(isset($_POST['cancel'])){
 		header('Location: ./my_profile.php');
+	}
+?>
+
+<?php
+	//Add in user to the matches database, with the potential to match to every user. Set state = 1, pending both 
+	$state = 1;
+	
+	$sql = "SELECT user_id FROM user WHERE user_id <> $u1id";
+	$result = $conn->query($sql);
+	if($result->num_rows > 0){
+		while($row = $result->fetch_assoc()){
+			$sql2 = "INSERT INTO matches(user1_id, user2_id, match_state) VALUES(?,?,?)";
+			$stmt = $conn->prepare($sql2);
+			$stmt->bind_param("iii", $u1id, $row['user_id'], $state);
+			$stmt->execute();
+		}
 	}
 ?>
 
@@ -56,7 +114,7 @@
             <form id="edit_preferences" method="POST">
                 <fieldset>
                     <legend>Gender &amp; Sexual Preferences</legend>
-
+					<!--TODO: These responses must be saved in the database-->
                     <span>What is your gender?</span><span class="error"> * Required</span>
                     <br/>
                     <input type="radio" name="gender" id="male" class="pinfo-input" value="male"/>

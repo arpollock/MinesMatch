@@ -7,7 +7,7 @@
 	$dbhost = "localhost";
 	$username = "root";
 	$password = "";
-	$dbname = "lovepotion";
+	$dbname = "love_potion";
 	// alex Data base connection stuff
 
 //	$dbhost = "127.0.0.1"; 
