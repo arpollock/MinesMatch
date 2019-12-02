@@ -2,6 +2,7 @@
 	if(!isset($_COOKIE['user'])){
 		header("location: ./login.php");
 	}
+	include "databse_conn.php";
 	
     $current_page = "other_profile";
     $path_to_home = "./";
@@ -12,6 +13,14 @@
     $is_pending = intval($is_pending);
     // TODO: query sql for first and last name from uid
     // ... and all other profile info
+	$sql = "SELECT first_name, last_name FROM user WHERE user_id=?";
+	$stmt = $conn->prepare($sql);
+	$stmt->bind_param('i', $uid);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$names = $result->fetch_assoc();
+	$first = $names['first_name'];
+	$last = $names['last_name'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +44,7 @@
                 <img class="profile-pic" src="./images/user.png" style="max-width: 200px; height: auto;" alt="Their profile pic."/>
                 <div class="about-text">
                     <div class="title-wrapper">
-                        <h2><?php echo $uid?>'s profile</h2>
+                        <h2><?php echo $first . " " . $last?>'s profile</h2>
 						<!-- TODO: Adjust the match_state in the database based on button clicked here-->
                         <div id="match-buttons" <?php if ( $is_pending!=0 && $is_pending!=$my_match_userid ) { echo 'style="display: none;"'; } ?> >
                             <div id="match-yes" onclick="match(true)">Yes &lt;3</div>

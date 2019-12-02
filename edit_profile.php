@@ -76,7 +76,7 @@
 <?php
 	//Add in user to the matches database, with the potential to match to every user. Set state = 1, pending both 
 	$state = 1;
-	
+	$u1id = $_COOKIE['user'];
 	$sql = "SELECT user_id FROM user WHERE user_id <> $u1id";
 	$result = $conn->query($sql);
 	if($result->num_rows > 0){

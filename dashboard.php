@@ -56,8 +56,9 @@
 								$stmt->bind_param("i", $row['user2_id']);
 								$stmt->execute();
 								$result2 = $stmt->get_result();
+								$u2 = $row['user2_id'];
 								?>
-								<tr onclick="window.location='./other_profile.php?uid=123&p=0';">
+								<tr onclick="window.location='./other_profile.php?uid=<?php echo $u2; ?>&p=0';">
 								<?php
 								while($names = $result2->fetch_assoc()){
 									echo '<td>' .$names['first_name']. '</td>';
@@ -87,11 +88,12 @@
 								$stmt->bind_param("i", $row['user2_id']);
 								$stmt->execute();
 								$result2 = $stmt->get_result();
+								$u2 = $row['user2_id'];
 								?>
-								<tr onclick="window.location='./other_profile.php?uid=123&p=0';">
+								<tr onclick="window.location='./other_profile.php?uid=<?php echo $u2;?>&p=0';">
 								<?php
 								while($names = $result2->fetch_assoc()){
-									echo '<tr onclick="window.location="./other_profile.php?uid=123&p=0";">';
+									//echo '<tr onclick="window.location="./other_profile.php?uid=123&p=0";">';
 										echo '<td>' .$names['first_name']. '</td>';
 										echo '<td>' .$names['last_name']. '</td>';
 										echo '</tr>';
