@@ -23,12 +23,18 @@
 			}
 		}
 		if(!$error){
-			//$sql = "SELECT user_id FROM user WHERE "
+			
+			$u1id = $_COOKIE['user'];
+			//Delete any existing question answers if they are answering again
+			$clearsql = "DELETE FROM preference WHERE user_id=? AND question_id < 7";
+			$clear = $conn->prepare($clearsql);
+			$clear->bind_param('i', $u1id);
+			$clear->execute();
+			//Insert question answers into the database
 			$sql = "INSERT INTO preference(user_id, question_id, question_answer) VALUES(?, ?, ?)";
 			$stmt = $conn->prepare($sql);
-			$gender = 1;
-			$u1id = $_COOKIE['user'];
 			
+			$gender = 1;
 			$stmt->bind_param('iis', $u1id, $gender, $_POST['gender']);
 			$stmt->execute();
 			
@@ -131,19 +137,16 @@
                     <br/>
                     <br/>
 
-                    <span>What is your sexual orientation?</span><span class="error"> * Required</span>
+                    <span>What genders would you like to match with?</span><span class="error"> * Required</span>
                     <br/>
-                    <input type="radio" name="orientation" id="straight" class="pinfo-input" value="straight"/>
-                    <label for="straight">Straight</label> <!--TODO: should we technically get this from SQl--> <!-- could do this generation in a loop but is it actually easier or just less code?? -->
+                    <input type="radio" name="orientation" id="male" class="pinfo-input" value="male"/>
+                    <label for="male">Males</label> <!--TODO: should we technically get this from SQl--> <!-- could do this generation in a loop but is it actually easier or just less code?? -->
                     <br/>
-                    <input type="radio" name="orientation" id="gay" class="pinfo-input" value="gay"/>
-                    <label for="gay">Gay/Lesbian</label>
+                    <input type="radio" name="orientation" id="female" class="pinfo-input" value="female"/>
+                    <label for="female">Females</label>
                     <br/>
-                    <input type="radio" name="orientation" id="bi" class="pinfo-input" value="bi"/>
-                    <label for="bi">Bisexual</label>
-                    <br/>
-                    <input type="radio" name="orientation" id="pan" class="pinfo-input" value="pan"/>
-                    <label for="pan">Pansexual</label>
+                    <input type="radio" name="orientation" id="both" class="pinfo-input" value="both"/>
+                    <label for="both">Both!</label>
                 </fieldset>
                 <fieldset>
                     <legend>Academic Information</legend>

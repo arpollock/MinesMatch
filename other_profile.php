@@ -21,6 +21,12 @@
 	$names = $result->fetch_assoc();
 	$first = $names['first_name'];
 	$last = $names['last_name'];
+	
+	/*function updateDB(matched){
+		if(matched){
+			$sql = "UPDATE matches SET "
+		}
+	}*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,10 +58,9 @@
                         </div>
                         <!-- TODO: maybe this is a mailto click of their email? -->
                         <div class="love" <?php if ($is_pending!=3) { echo 'style="display: none;"'; } ?> >Matched!</div>
-                        <div class="love" id="waiting" <?php if ($is_pending==$their_match_userid) { echo 'style="display: inline-block;"'; } ?> >Waiting for <?php echo $uid?>'s Response...</div>
+                        <div class="love" id="waiting" <?php if ($is_pending==$their_match_userid) { updateDB(true); echo 'style="display: inline-block;"'; } ?> >Waiting for <?php echo $first?>'s Response...</div>
                     </div>
                     <hr/>
-					<!-- TODO: update this from the database -->
 					<?php
 						$sql = "SELECT question_text, question_id FROM question WHERE question_id < 7";
 						$result = $conn->query($sql);
