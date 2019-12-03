@@ -19,7 +19,7 @@ function match(yes_or_no) {
 function match_result(their_answer) {
     $("#waiting").hide();
     if(their_answer) { // they said yes too!!
-        const email = "test@mines.edu"; // TODO: make me actual email
+        const email = "mdcox@mymail.mines.edu"; // TODO: make me actual email
         alert(`The M stands for match! Email them at: ${email}`); 
     } else {
         window.location.href = "./dashboard.php";
