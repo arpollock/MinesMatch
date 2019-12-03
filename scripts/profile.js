@@ -6,6 +6,7 @@ function match(yes_or_no) {
     // TODO: put their answer entry to DB
     if(!yes_or_no) { // they said no
         window.location.href="./dashboard.php";
+		//set match_state to 0
     } else {
         $("#match-buttons").hide();
         $("#waiting").show();
@@ -13,6 +14,7 @@ function match(yes_or_no) {
         // if get DB result do these lines:
         // var their_answer = true/false;
         // match_result(their_answer);
+		//increment match_state by 1. 
     }
 }
 

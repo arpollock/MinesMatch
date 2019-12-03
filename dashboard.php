@@ -46,7 +46,7 @@
                            <th>Last Name</th> 
                         </tr>
 					<?php
-						$u1id = $_COOKIE['user']; //FIGURE OUT HOW TO GET CURRENT USER ID
+						$u1id = $_COOKIE['user']; 
 						$sql = "SELECT user2_id FROM matches WHERE user1_id = $u1id AND match_state=1";
 						$result = $conn->query($sql);
 						if($result->num_rows > 0){
@@ -79,7 +79,7 @@
                            <th>Last Name</th> 
                         </tr>
 						<?php
-						$sql = "SELECT user2_id FROM matches WHERE user1_id = $u1id AND match_state='3'";
+						$sql = "SELECT user2_id FROM matches WHERE user1_id = $u1id AND match_state=3";
 						$result = $conn->query($sql);
 						if($result->num_rows > 0){
 							while($row = $result->fetch_assoc()){
