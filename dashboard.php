@@ -15,6 +15,7 @@
 	$result = $conn->query($sql);
 	if($result->num_rows > 0){
 		while($row = $result->fetch_assoc()){
+			//check to make sure that the pair isn't already in in the form of u2, u1
 			$sql2 = "INSERT INTO matches(user1_id, user2_id, match_state) VALUES(?,?,?)";
 			$stmt = $conn->prepare($sql2);
 			$stmt->bind_param("iii", $u1id, $row['user_id'], $state);
