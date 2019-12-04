@@ -65,6 +65,10 @@
 			$stmt->bind_param('iis', $u1id, $golden, $_POST['place']);
 			$stmt->execute();
 			
+			$bio = 10;
+			$stmt->bind_param('iis', $ulid, $bio, $_POST['bio']);
+			$stmt->execute();
+			
 			header('Location: ./my_profile.php');
 		}
 	}
