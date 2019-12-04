@@ -125,7 +125,6 @@
         <link rel="stylesheet" type="text/css" href="./styles/global.css">
         <link rel="stylesheet" type="text/css" href="./styles/login.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="./scripts/login.js"></script>
 		<script>
 			var returning_user = true;
 			var returning_user_string = 
