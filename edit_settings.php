@@ -9,31 +9,51 @@
 	include "databse_conn.php";
 	
 	$userID = $_COOKIE['user'];
-	echo $userID;
+	$message = '';
+	
+	$stmt = $conn->prepare("SELECT * FROM login WHERE user_id = ?");
+	$stmt->bind_param("s", $userID);
+	$stmt->execute();
+	$pass_result = $stmt->get_result();
+	$pass_row = $pass_result->fetch_assoc();
+	
 	
 	$stmt = $conn->prepare("SELECT * FROM user WHERE user_id = ?");
-	$stmt->bind_param("ss", $userID);
+	$stmt->bind_param("s", $userID);
 	$stmt->execute();
-	$result = $stmt->get_result();
-	$row = $result->fetch_assoc();
+	$user_result = $stmt->get_result();
+	$user_row = $user_result->fetch_assoc();
 	
-	$first = $row['first_name'];
-	$last = $row['last_name'];
+	$first = $user_row['first_name'];
+	$last = $user_row['last_name'];
+	$password = $pass_row['password'];
 	
-	if(isset($_POST['Change Settings'])) {
-		if(empty($_POST['new_password']) || empty($_POST['confirm_password'])){
-			//only update name
-		}
-		else if(empty($_POST['first']) || empty($_POST['last'])){
-			//only update password
+	
+	if(isset($_POST['change_settings'])) {
+		$first = $_POST['first'];
+		$last = $_POST['last'];
+		$new_pass = $_POST['new_password'];
+		$confirm_password = $_POST['confirm_password'];
+		$current_pass = $_POST['curr_password'];
+		
+		if($current_pass == $password){
+			
+			if($new_pass == $confirm_password){
+				$stmt = $conn->prepare("UPDATE user SET first_name = ?, last_name = ? WHERE user_id = ?");
+				$stmt->bind_param("ssi", $first, $last, $userID);
+				$stmt->execute(); 
+				
+				$stmt = $conn->prepare("UPDATE login SET password = ? WHERE user_id = ?");
+				$stmt->bind_param("si", $new_pass, $userID);
+				$stmt->execute(); 
+			}
+			else {
+				$message = "New passwords did not match!";
+			}
 		}
 		else {
-			//update all
-			$stmt = $conn->prepare("UPDATE login SET password = ? WHERE email = ?");
-			$stmt->bind_param("ss", $new_pass, $email);
-			$stmt->execute();
+			$message = "Your current password was not correct!";
 		}
-		
 		
 	}
 
@@ -56,24 +76,15 @@
         <?php include './templateHeader.php'; ?>
         <section class="main-content">
             <h2>Edit My Settings</h2>
-			<?php
-				if($error){
-					echo "<p class='error'>*You did not fill in all required fields!</p>";
-				}
-			?>
+			
             <form id="edit_settings" method="POST">
                 <div class="flex-input">
                     <label for="first">First Name: </label>
-                    <input type="text" name="first" id="first_name" class="login-text-input" placeholder="First name" required>
+                    <input type="text" name="first" id="first_name" class="login-text-input" value="<?php echo ucfirst($first) ?>" required>
                 </div>
                 <div class="flex-input">
                     <label for="last">Last Name: </label>
-                    <input type="last" name="last" id="last_name" class="login-text-input" placeholder="<?php echo $first ?>" required>
-                </div>
-                <div class="flex-input">
-                    <label for="email">Email: </label>
-                    <input type="email" name="email" id="new_user_email" class="login-text-input" placeholder="Enter email" required>
-                    <span class="error">* <?php /* TODO */?></span>
+                    <input type="last" name="last" id="last_name" class="login-text-input" value="<?php echo ucfirst($last) ?>" required>
                 </div>
                 <br/>
                 <div class="flex-input">
@@ -91,9 +102,9 @@
                     <label for="confirm_password">Confirm New Password: </label>
                     <input type="password" name="confirm_password" id="confirm_password" class="login-text-input" placeholder="Confirm New Password" required>
                 </div>
-                <span class="error">* <?php echo $message_new ?></span>
+                <span class="error">* <?php echo $message ?></span>
                 <br>
-                <input type="submit" name="Change Settings" value="Register" class="submit-login button"/>
+                <input type="submit" name="change_settings" value="Submit" class="submit-login button"/>
             </form>
         </section>
         <?php include './templateFooter.php'; ?>
