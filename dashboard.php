@@ -8,6 +8,22 @@
     $path_to_home = "./";
 	include "databse_conn.php";
 ?>
+<?php
+	//Add in user to the matches database, with the potential to match to every user. Set state = 1, pending both 
+	$state = 1;
+	$u1id = $_COOKIE['user'];
+	$sql = "SELECT user_id FROM user WHERE user_id <> $u1id";
+	$result = $conn->query($sql);
+	if($result->num_rows > 0){
+		while($row = $result->fetch_assoc()){
+			$sql2 = "INSERT INTO matches(user1_id, user2_id, match_state) VALUES(?,?,?)";
+			$stmt = $conn->prepare($sql2);
+			$stmt->bind_param("iii", $u1id, $row['user_id'], $state);
+			$stmt->execute();
+		}
+	}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>  
@@ -49,21 +65,48 @@
 						$u1id = $_COOKIE['user']; 
 						$sql = "SELECT user2_id FROM matches WHERE user1_id = $u1id AND match_state=1";
 						$result = $conn->query($sql);
+						$num = $result->num_rows;
+						echo $num;
 						if($result->num_rows > 0){
 							while($row = $result->fetch_assoc()){
-								$sql2 = "SELECT first_name, last_name FROM user WHERE user_id=?";
-								$stmt = $conn->prepare($sql2);
-								$stmt->bind_param("i", $row['user2_id']);
-								$stmt->execute();
-								$result2 = $stmt->get_result();
-								$u2 = $row['user2_id'];
-								?>
-								<tr onclick="window.location='./other_profile.php?uid=<?php echo $u2; ?>&p=0';">
-								<?php
-								while($names = $result2->fetch_assoc()){
-									echo '<td>' .$names['first_name']. '</td>';
-									echo '<td>' .$names['last_name']. '</td>';
-									echo '</tr>';
+								//get the gender they want to match with
+								$genderprefsql = "SELECT question_answer FROM preference WHERE question_id=2 AND user_id=?";
+								$genderprefsql = $conn->prepare($genderprefsql);
+								$genderprefsql->bind_param("i", $u1id);
+								$genderprefsql->execute();
+								$genpref = $genderprefsql->get_result();
+								$genderpref = $genpref->fetch_assoc();
+								$genderRealPref = $genderpref['question_answer'];
+								
+								//get the gender of the other user
+								$gendersql = "SELECT question_answer FROM preference WHERE question_id=1 AND user_id=?";
+								$gendersql = $conn->prepare($gendersql);
+								$gendersql->bind_param("i", $row['user2_id']);
+								$gendersql->execute();
+								$gen2 = $gendersql->get_result();
+								$gender2 = $gen2->fetch_assoc();
+								$genderReal = $gender2['question_answer'];
+								
+								//if the gender prefs match, then display
+								$compare = strcmp($genderRealPref,$genderReal);
+								echo $compare;
+								if($compare == 0){
+								
+									$sql2 = "SELECT first_name, last_name FROM user WHERE user_id=?";
+									$stmt = $conn->prepare($sql2);
+									$stmt->bind_param("i", $row['user2_id']);
+									$stmt->execute();
+									$result2 = $stmt->get_result();
+									$u2 = $row['user2_id'];
+								
+									?>
+									<tr onclick="window.location='./other_profile.php?uid=<?php echo $u2; ?>&p=0';">
+									<?php
+									while($names = $result2->fetch_assoc()){
+										echo '<td>' .$names['first_name']. '</td>';
+										echo '<td>' .$names['last_name']. '</td>';
+										echo '</tr>';
+									}
 								}
 							}
 						}
