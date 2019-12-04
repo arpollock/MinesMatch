@@ -9,7 +9,7 @@
 ?>
 <?php
 	//Add in user to the matches database, with the potential to match to every user. Set state = 1, pending both 
-	$state = 1;
+	$state = 0;
 	$u1id = $_COOKIE['user'];
 	$sql = "SELECT user_id FROM user WHERE user_id <> $u1id";
 	$result = $conn->query($sql);
@@ -62,7 +62,7 @@
                         </tr>
 					<?php
 						$u1id = $_COOKIE['user']; 
-						$sql = "SELECT user2_id FROM matches WHERE user1_id = $u1id AND match_state=1";
+						$sql = "SELECT user2_id FROM matches WHERE user1_id = $u1id AND (match_state = 0 OR match_state = 1 OR match_state = 2)";
 						$result = $conn->query($sql);
 						if($result->num_rows > 0){
 							while($row = $result->fetch_assoc()){

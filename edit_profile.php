@@ -96,6 +96,15 @@
 				if($error){
 					echo "<p class='error'>*You did not fill in all required fields!</p>";
 				}
+				echo $u1id;
+				$sqlPrefs = "SELECT question_answer FROM preference WHERE user_id = ? AND question_id=1";
+				$sqlPref = $conn->prepare($sqlPrefs);
+				$sqlPref->bind_param("i", $u1id);
+				$sqlPref->execute();
+				$prefs = $sqlPref->get_result();
+				$pref = $prefs->fetch_assoc();
+				$fem = $pref['question_answer'];
+				echo $fem;
 			?>
             <form id="edit_preferences" method="POST">
                 <fieldset>
@@ -103,7 +112,7 @@
 					<!--TODO: These responses must be saved in the database-->
                     <span>What is your gender?</span><span class="error"> * Required</span>
                     <br/>
-                    <input type="radio" name="gender" id="male" class="pinfo-input" value="male"/>
+                    <input type="radio" name="gender" id="male" class="pinfo-input" value="male" <?php if(strcmp($fem, "female") == 0){echo "checked";} ?>/>
                     <label for="male">Male</label> <!--TODO: should we technically get this from SQl--> <!-- could do this generation in a loop but is it actually easier or just less code?? -->
                     <br/>
                     <input type="radio" name="gender" id="female" class="pinfo-input" value="female"/>
