@@ -71,20 +71,10 @@
 	if(isset($_POST['cancel'])){
 		header('Location: ./my_profile.php');
 	}
-	//Add in user to the matches database, with the potential to match to every user. Set state = 1, pending both 
-	$state = 1;
-	$u1id = $_COOKIE['user'];
-	$sql = "SELECT user_id FROM user WHERE user_id <> $u1id";
-	$result = $conn->query($sql);
-	if($result->num_rows > 0){
-		while($row = $result->fetch_assoc()){
-			$sql2 = "INSERT INTO matches(user1_id, user2_id, match_state) VALUES(?,?,?)";
-			$stmt = $conn->prepare($sql2);
-			$stmt->bind_param("iii", $u1id, $row['user_id'], $state);
-			$stmt->execute();
-		}
-	}
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>  

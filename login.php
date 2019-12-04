@@ -126,7 +126,9 @@
 				localhost/all/MinesMatch/verify.php?email='.$email.'&hash='.$hash.'
 				'; //CHANGE FOR ACTUAL DIRECTORY!!!!!!!!!
 				$headers = "From: may.emma127@gmail.com" . "\r\n";
-				$mail = mail($to, $subject, $body, $headers);
+				$mail = false;
+				//$mail = mail($to, $subject, $body, $headers);
+				mail($to, $subject, $body, $headers);
 
 				$cookieValue = $user_id;
 				setcookie($cookieName, $cookieValue, time()+(10*60), "/");
