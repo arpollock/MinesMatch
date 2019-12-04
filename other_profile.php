@@ -12,7 +12,7 @@
     $is_pending = -1;
     // TODO: query sql for first and last name from uid
     // ... and all other profile info
-	$sql = "SELECT first_name, last_name FROM user WHERE user_id=?";
+	$sql = "SELECT first_name, last_name FROM user WHERE user_id=?;";
 	$stmt = $conn->prepare($sql);
 	$stmt->bind_param('i', $uid);
 	$stmt->execute();
@@ -20,7 +20,15 @@
 	$names = $result->fetch_assoc();
 	$first = $names['first_name'];
 	$last = $names['last_name'];
+
 	$my_uid = $_COOKIE['user'];
+
+	$sql_email = "SELECT email FROM login WHERE user_id=?;";
+	$stmt_email = $conn->prepare($sql_email);
+	$stmt_email->bind_param('i', $uid);
+	$stmt_email->execute();
+	$result_email = $stmt_email->get_result();
+	$email = $result_email->fetch_assoc()['email'];
 
 	$stmt_get_ids = $conn->prepare("SELECT * FROM MATCHES WHERE (user1_id=? AND user2_id=?) OR (user1_id=? AND user2_id=?);");
 	$stmt_get_ids->bind_param("iiii", $my_uid, $uid, $uid, $my_uid);
@@ -70,7 +78,7 @@
                             <div id="match-no" onclick="match(<?php echo($my_uid . ', ' . $uid); ?>, false)">No &lt;/3</div>
                         </div>
                         <!-- TODO: maybe this is a mailto click of their email? -->
-                        <div class="love" <?php if ($is_pending!=3) { echo 'style="display: none;"'; } ?> >Matched!</div>
+                        <div class="love" id="successful" <?php if ($is_pending!=3) { echo 'style="display: none;"'; } ?> >Matched! Email them at: <?php echo($email);?></div>
                         <div class="love" id="waiting" <?php if ($is_pending==$their_match_userid) { echo 'style="display: inline-block;"'; } ?> >Waiting for <?php echo $first?>'s Response...</div>
                     </div>
                     <hr/>
@@ -86,20 +94,18 @@
 								$result2 = $stmt->get_result();
 								$answer = $result2->fetch_assoc();
 								if($row['question_id'] == 1){
-									echo '<p class="gen-info">' . $answer['question_answer'] . '</p>';
+									echo '<span class="gen-info">' . $answer['question_answer'] . ' | ' . '</span>';
 								}
 								if($row['question_id'] == 3){
-									echo '<p class="gen-info">' . $answer['question_answer'] . '</p>';
+									echo '<span class="gen-info">' . $answer['question_answer'] . ' | ' . '</span>';
 								}
 								if($row['question_id'] == 5){
-									echo '<p class="gen-info">' . "Class of " .$answer['question_answer'] . '</p>';
+									echo '<span class="gen-info">' . "Class of " .$answer['question_answer'] . '</span>';
 								}
-						}
-					 }
+							}
+					 	}
 					?>
-					<p id="help">Pending: <?php echo($is_pending)?> My # UID: <?php echo($my_match_userid)?></p>
                     <p>This is my main bio blurb! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-					<p>Clicked Status: <?php echo($clickedBut); ?></p>
 				</div>          
             </section>
             <hr/>

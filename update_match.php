@@ -43,6 +43,6 @@ if($curr_match_state != -1) {
     $stmt = $conn->prepare("UPDATE matches SET match_state=? WHERE user1_id=? AND user2_id=?;");
     $stmt->bind_param("iii", $new_match_state, $user1_id, $user2_id);
     $stmt->execute();
-    echo($new_match_state . " " . $user1_id . " " . $user2_id);
+    echo($new_match_state);
 }
 ?>

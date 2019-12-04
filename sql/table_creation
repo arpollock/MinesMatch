@@ -40,9 +40,9 @@ CREATE TABLE `preference` (
 CREATE TABLE `matches` (
  `user1_id` int(11) NOT NULL,
  `user2_id` int(11) NOT NULL,
- `match_state` int(11) NOT NULL DEFAULT 1,
+ `match_state` int(11) NOT NULL DEFAULT 0,
  PRIMARY KEY (`user2_id`,`user1_id`),
- KEY `user1_id` (`user1_id`,`user2_id`),
+ KEY `users_id` (`user1_id`,`user2_id`),
  CONSTRAINT `matches_ibfk_1` FOREIGN KEY (`user1_id`) REFERENCES `user` (`user_id`),
  CONSTRAINT `matches_ibfk_2` FOREIGN KEY (`user2_id`) REFERENCES `user` (`user_id`)
 );
