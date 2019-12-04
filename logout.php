@@ -4,13 +4,7 @@
 	$process_login = "./process_login.php";
 	$cookieName = "user";
 ?>
-<?php 
 
-	$userID = $_POST['userID'];
-	
-	setcookie($cookieName, $userID, time()-3600);
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,11 +27,18 @@
     </head>
 		
 	<body onload="logout()">
+	</body>
+	<?php 
+
+	$userID = $_POST['userID'];
+	
+	setcookie($cookieName, $userID, time()-6600);
+
+?>
 	<?php
 		header("location: ./login.php");
 		exit();
 	?>
-	</body>
 </html>
 
 

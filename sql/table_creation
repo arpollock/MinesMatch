@@ -1,12 +1,3 @@
-CREATE TABLE `login` (
- `user_id` int(11) NOT NULL,
- `email` varchar(256) NOT NULL,
- `password` varchar(256) NOT NULL,
- PRIMARY KEY (`email`,`password`),
- KEY `user_id` (`user_id`),
- CONSTRAINT `login_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-)
-
 CREATE TABLE `user` (
  `user_id` int(11) NOT NULL AUTO_INCREMENT,
  `first_name` text NOT NULL,
@@ -14,7 +5,25 @@ CREATE TABLE `user` (
  `gender` text NOT NULL,
  `image_file` text,
  PRIMARY KEY (`user_id`)
-) 
+);
+
+CREATE TABLE `login` (
+ `user_id` int(11) NOT NULL,
+ `email` varchar(256) NOT NULL,
+ `password` varchar(256) NOT NULL,
+ PRIMARY KEY (`email`,`password`),
+ KEY `user_id` (`user_id`),
+ CONSTRAINT `login_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+); 
+
+CREATE TABLE `question` (
+ `question_id` int(11) NOT NULL AUTO_INCREMENT,
+ `question_text` varchar(256) NOT NULL,
+ `question_answer` varchar(256) NOT NULL,
+ `weight` int(11) NOT NULL,
+ PRIMARY KEY (`question_id`),
+ UNIQUE KEY `question_text` (`question_text`)
+);
 
 CREATE TABLE `preference` (
  `user_id` int(11) NOT NULL,
@@ -24,16 +33,7 @@ CREATE TABLE `preference` (
  KEY `user_id` (`user_id`,`question_id`),
  CONSTRAINT `preference_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
  CONSTRAINT `preference_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `question` (`question_id`)
-) 
-
-CREATE TABLE `question` (
- `question_id` int(11) NOT NULL AUTO_INCREMENT,
- `question_text` varchar(256) NOT NULL,
- `question_answer` varchar(256) NOT NULL,
- `weight` int(11) NOT NULL,
- PRIMARY KEY (`question_id`),
- UNIQUE KEY `question_text` (`question_text`)
-) 
+); 
 
 CREATE TABLE `matches` (
  `user1_id` int(11) NOT NULL,
@@ -43,4 +43,4 @@ CREATE TABLE `matches` (
  KEY `user1_id` (`user1_id`,`user2_id`),
  CONSTRAINT `matches_ibfk_1` FOREIGN KEY (`user1_id`) REFERENCES `user` (`user_id`),
  CONSTRAINT `matches_ibfk_2` FOREIGN KEY (`user2_id`) REFERENCES `user` (`user_id`)
-)
+);

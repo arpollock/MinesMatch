@@ -1,7 +1,7 @@
 <?php
 
 	// Morgan Data base connection
-
+	
 	// Data base connection
 
 	$dbhost = "localhost";
