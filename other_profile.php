@@ -101,7 +101,8 @@
 					?>
 					<p id="help"><?php echo($is_pending)?></p>
                     <p>This is my main bio blurb! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-                </div>          
+					<p>Clicked Status: <?php echo($clickedBut); ?></p>
+				</div>          
             </section>
             <hr/>
             <section class="all-questions">
