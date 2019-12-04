@@ -64,8 +64,6 @@
 						$u1id = $_COOKIE['user']; 
 						$sql = "SELECT user2_id FROM matches WHERE user1_id = $u1id AND match_state=1";
 						$result = $conn->query($sql);
-						$num = $result->num_rows;
-						echo $num;
 						if($result->num_rows > 0){
 							while($row = $result->fetch_assoc()){
 								//get the gender they want to match with
@@ -88,7 +86,6 @@
 								
 								//if the gender prefs match, then display
 								$compare = strcmp($genderRealPref,$genderReal);
-								echo $compare;
 								if($compare == 0){
 								
 									$sql2 = "SELECT first_name, last_name FROM user WHERE user_id=?";
