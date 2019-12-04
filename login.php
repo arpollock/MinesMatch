@@ -11,7 +11,8 @@
 	$cookieName = "user";
 	$cookieValue;
 
-	$mail = true;
+	$mail_attempt = false;
+	$mail = false;
 
 	$cookieUserType = "user_type";
 	$cookieUserTypeValue = "returning";
@@ -108,6 +109,7 @@
 				// echo($user_id ." ". $email ." ". $password ." ". $hash);
 				$stmt_login->bind_param("isss", $user_id, $email, $password, $hash);
 				$stmt_login->execute();
+				$mail_attempt = true;
 				
 				//send the activation email to the new user
 				// $to = "eclm123@gmail.com";
@@ -203,10 +205,12 @@
                 <h1>Welcome to Mines Match!</h1>
                 <p>The online dating service for geeks, by geeks.</p>
 				<?php
-				if($mail){
-					echo "SUCCESS";
-				}else{
-					echo "FAIL";
+				if($mail_attempt) {
+					if($mail){
+						echo "Account created successfully! Check your email to finish the process.";
+					}else{
+						echo "Account creation failed. ): Please try again.";
+					}
 				}
 				?>
 				
