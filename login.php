@@ -16,10 +16,10 @@
 	include('databse_conn.php');
 	
 	
-	// checking cookie
-	if(!isset($_COOKIE["user"])) {
-		header("./login.php");
-	}
+	// checking cookie (DON'T DO ON login page itself -- only on all user-necessary pages)
+	// if(!isset($_COOKIE["user"])) {
+	// 	header("./login.php");
+	// }
 	
 	if(isset($_POST['submit'])) {
 		
