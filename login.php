@@ -6,9 +6,13 @@
 	$lastName;
 	$userID;
 	$new_user;
-	$message = "";
+	$message_new = "";
+	$message_returning = "";
 	$cookieName = "user";
 	$cookieValue;
+
+	$cookieUserType = "user_type";
+	$cookieUserTypeValue = "returning";
 	
 ?>
 
@@ -51,12 +55,12 @@
 					header('Location: ./dashboard.php');
 				}
 				else {
-					$message = "Password was incorrect.";
+					$message_returning = "Password was incorrect.";
 				}
 			}
 		}
 		else {
-			$message = "Email was incorrect";
+			$message_returning = "Email was incorrect";
 		}
 	}
 	
@@ -76,7 +80,7 @@
 		$count = mysqli_num_rows($result);
 		
 		if($count > 0){
-			$message = "That email already has an account";
+			$message_new = "That email already has an account";
 		}
 		else {
 		
@@ -104,7 +108,7 @@
 				header('Location: ./edit_profile.php');
 			}
 			else {
-				$message = "Passwords did not match!";
+				$message_new = "Passwords did not match!";
 			}
 		}
 	}
@@ -123,6 +127,50 @@
         <link rel="stylesheet" type="text/css" href="./styles/login.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="./scripts/login.js"></script>
+		<script>
+			var returning_user = true;
+			var returning_user_string = 
+				<?php
+					if(isset($_COOKIE['user_type'])) {
+						echo json_encode($_COOKIE['user_type']); 
+					} else {
+						echo "'returning'";
+					}
+				?>;
+			if(returning_user_string === "new") {
+				returning_user = false;
+			}
+
+			$(document).ready( function() {
+				if(returning_user) {
+					$("#new_user").hide();
+					$("#toggle-login").html("Sign Up");
+				} else {
+					$("#returning_user").hide();
+					$("#toggle-login").html("Login");
+				}
+			});
+
+			function toggle_login() {
+				returning_user = !returning_user;
+				var cookieUserTypeValue = "returning";
+				if (returning_user) {
+					$("#returning_user").show();
+					$("#new_user").hide();
+					$("#toggle-login").html("Sign Up");
+				} else { // new user 
+					cookieUserTypeValue = "new";
+					$("#returning_user").hide();
+					$("#new_user").show();
+					$("#toggle-login").html("Login");
+				}
+				document.cookie = `user_type=${cookieUserTypeValue}`;
+			}
+
+			function forgot_password() {
+				window.location.href="./forgot_password.php";
+			}
+		</script>
     </head>
 		
 	<body>
@@ -130,6 +178,7 @@
         <section class="main-content">
             <div class="login-form">
                 <div id="toggle-login" class="button" onclick="toggle_login()">Sign Up</div>
+				<div id="rest-password" class="button" onclick="forgot_password()">Reset Password</div>
                 <h1>Welcome to Mines Match!</h1>
                 <p>The online dating service for geeks, by geeks.</p>
 				
@@ -158,7 +207,7 @@
                         <label for="confirm_password">Confirm Password: </label>
                         <input type="password" name="confirm_password" id="confirm_password" class="login-text-input" placeholder="Enter password" required>
                     </div>
-					<span class="error">* <?php echo $message ?></span>
+					<span class="error">* <?php echo $message_new ?></span>
 					<br>
                     <input type="submit" name="register" value="Register" class="submit-login button"/>
 				</form>
@@ -177,7 +226,7 @@
 					
 					<?php
 						if(isset($_POST['submit'])){
-							echo "<span class='error'>*" . $message . "</span>";
+							echo "<span class='error'>*" . $message_returning . "</span>";
 						}
 						else {
 							echo "<span class='error'>*</span>";

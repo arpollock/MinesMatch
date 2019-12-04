@@ -28,12 +28,18 @@ body {
     font-style: italic;
 }
 .submit-login {
+    margin-top: var(--padding);
     min-width: 33%;
 }
-#toggle-login {
+#rest-password, #toggle-login {
     position: absolute;
     top: var(--padding);
+}
+#toggle-login {
     right: var(--padding);
+}
+#rest-password {
+    left: var(--padding);
 }
 .login-form>form>*:not(:last-child) {
     margin-bottom: calc(var(--padding) / 2);
