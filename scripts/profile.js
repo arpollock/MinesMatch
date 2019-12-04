@@ -1,7 +1,3 @@
-$(document).ready( function() {
-    $("#new_user").hide();
-});
-
 function match(yes_or_no) {
     // TODO: put their answer entry to DB
     if(!yes_or_no) { // they said no
