@@ -9,7 +9,7 @@
     $uid = $_REQUEST["uid"];
     $my_match_userid = 2;
     $their_match_userid = 1;
-    $is_pending = intval($is_pending);
+    $is_pending = -1;
     // TODO: query sql for first and last name from uid
     // ... and all other profile info
 	$sql = "SELECT first_name, last_name FROM user WHERE user_id=?";
@@ -21,26 +21,24 @@
 	$first = $names['first_name'];
 	$last = $names['last_name'];
 	$my_uid = $_COOKIE['user'];
-	$user1_id = -1; 
-	// figure out who is which # user id
-	$user2_id = -1; 
-	$curr_match_state = -1;
 
 	$stmt_get_ids = $conn->prepare("SELECT * FROM MATCHES WHERE (user1_id=? AND user2_id=?) OR (user1_id=? AND user2_id=?);");
-	$stmt_get_ids->bind_param("iiii", $uid_me, $uid_them, $uid_them, $uid_me);
-	$stmt->execute();
+	$stmt_get_ids->bind_param("iiii", $my_uid, $uid, $uid, $my_uid);
+	$stmt_get_ids->execute();
 	$ids_result = $stmt_get_ids->get_result();
 	if($ids_result->num_rows == 1){
-		while($row = $result->fetch_assoc()){ // find who is which user id (1 or 2):
-			if($row['user1_id'] == $uid_me) { // i am 1 and they are 2
+		while($row = $ids_result->fetch_assoc()){ // find who is which user id (1 or 2):
+			if($row['user1_id'] == $my_uid) { // i am 1 and they are 2
 				$my_match_userid = 1;
 				$their_match_userid = 2;
-			} else if($row['user2_id'] == $uid_me) { // i am 2 and they 1
+			} else if($row['user2_id'] == $my_uid) { // i am 2 and they 1
 				$my_match_userid = 2;
 				$their_match_userid = 1;
 			}
 			$is_pending = $row['match_state'];
 		}
+	} else {
+		$is_pending = $ids_result->num_rows;
 	}
 ?>
 <!DOCTYPE html>
@@ -99,7 +97,7 @@
 						}
 					 }
 					?>
-					<p id="help"><?php echo($is_pending)?></p>
+					<p id="help">Pending: <?php echo($is_pending)?> My # UID: <?php echo($my_match_userid)?></p>
                     <p>This is my main bio blurb! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
 					<p>Clicked Status: <?php echo($clickedBut); ?></p>
 				</div>          

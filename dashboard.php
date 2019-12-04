@@ -62,12 +62,12 @@
                         </tr>
 					<?php
 						$u1id = $_COOKIE['user']; 
-						$sql = "SELECT user2_id FROM matches WHERE user1_id = $u1id AND (match_state = 0 OR match_state = 1 OR match_state = 2)";
+						$sql = "SELECT user2_id FROM matches WHERE (user1_id=$u1id OR user2_id=$u1id) AND (match_state=0 OR match_state=1 OR match_state=2);";
 						$result = $conn->query($sql);
 						if($result->num_rows > 0){
 							while($row = $result->fetch_assoc()){
 								//get the gender they want to match with
-								$genderprefsql = "SELECT question_answer FROM preference WHERE question_id=2 AND user_id=?";
+								$genderprefsql = "SELECT question_answer FROM preference WHERE question_id=2 AND user_id=?;";
 								$genderprefsql = $conn->prepare($genderprefsql);
 								$genderprefsql->bind_param("i", $u1id);
 								$genderprefsql->execute();
@@ -76,7 +76,7 @@
 								$genderRealPref = $genderpref['question_answer'];
 								
 								//get the gender of the other user
-								$gendersql = "SELECT question_answer FROM preference WHERE question_id=1 AND user_id=?";
+								$gendersql = "SELECT question_answer FROM preference WHERE question_id=1 AND user_id=?;";
 								$gendersql = $conn->prepare($gendersql);
 								$gendersql->bind_param("i", $row['user2_id']);
 								$gendersql->execute();
@@ -88,7 +88,7 @@
 								$compare = strcmp($genderRealPref,$genderReal);
 								if($compare == 0){
 								
-									$sql2 = "SELECT first_name, last_name FROM user WHERE user_id=?";
+									$sql2 = "SELECT first_name, last_name FROM user WHERE user_id=?;";
 									$stmt = $conn->prepare($sql2);
 									$stmt->bind_param("i", $row['user2_id']);
 									$stmt->execute();
@@ -96,7 +96,7 @@
 									$u2 = $row['user2_id'];
 								
 									?>
-									<tr onclick="window.location='./other_profile.php?uid=<?php echo $u2; ?>&p=0';">
+									<tr onclick="window.location='./other_profile.php?uid=<?php echo $u2; ?>';">
 									<?php
 									while($names = $result2->fetch_assoc()){
 										echo '<td>' .$names['first_name']. '</td>';
@@ -118,7 +118,7 @@
                            <th>Last Name</th> 
                         </tr>
 						<?php
-						$sql = "SELECT user2_id FROM matches WHERE user1_id = $u1id AND match_state=3";
+						$sql = "SELECT user2_id FROM matches WHERE (user1_id=$u1id OR user2_id=$u1id) AND match_state=3;";
 						$result = $conn->query($sql);
 						if($result->num_rows > 0){
 							while($row = $result->fetch_assoc()){
@@ -129,7 +129,7 @@
 								$result2 = $stmt->get_result();
 								$u2 = $row['user2_id'];
 								?>
-								<tr onclick="window.location='./other_profile.php?uid=<?php echo $u2;?>&p=0';">
+								<tr onclick="window.location='./other_profile.php?uid=<?php echo $u2;?>';">
 								<?php
 								while($names = $result2->fetch_assoc()){
 									//echo '<tr onclick="window.location="./other_profile.php?uid=123&p=0";">';
