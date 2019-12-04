@@ -123,7 +123,7 @@
 				Please copy and paste this link into your browser to activate your account:
 				localhost/all/MinesMatch/verify.php?email='.$email.'&hash='.$hash.'
 				'; //CHANGE FOR ACTUAL DIRECTORY!!!!!!!!!
-				$headers .= "From: may.emma127@gmail.com" . "\r\n";
+				$headers = "From: may.emma127@gmail.com" . "\r\n";
 				$mail = mail($to, $subject, $body, $headers);
 				// $cookieValue = $user_id;
 				// setcookie($cookieName, $cookieValue, time()+3600, "/");
