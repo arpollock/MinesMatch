@@ -74,7 +74,8 @@
             <h2>Edit My Settings</h2>
 			
 			<fieldset>
-            <form id="edit_preferences" method="POST">
+
+            <form id="edit_settings" method="POST">
                 <div class="flex-input">
                     <label for="first">First Name: </label>
                     <input type="text" name="first" id="first_name" class="login-text-input" value="<?php echo ucfirst($first) ?>" required>
