@@ -107,7 +107,7 @@
 				$stmt3->execute();
 				
 				//send the activation email to the new user
-				$to = "emmamay@mymail.mines.edu";
+				$to = "eclm123@gmail.com";
 				$subject = 'Account Verification';
 				$body = '
 				Thanks for siging up for Mines Match! 
@@ -119,7 +119,7 @@
 				Please click this link to activate your account:
 				localhost/all/MinesMatch/verify.php?email='.$email.'&hash='.$hash.'
 				'; //CHANGE FOR ACTUAL DIRECTORY!!!!!!!!!
-				$headers .= "From: my-email@gmail.com" . "\r\n";
+				$headers .= "From: may.emma127@gmail.com" . "\r\n";
 				$mail = mail($to, $subject, $body, $headers);
 				
 				
