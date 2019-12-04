@@ -126,6 +126,8 @@
 									echo '</tr>';
 								}
 							}
+						} else {
+							echo('<tr><td colspan=2>No pending matches at this time.</td></tr>');
 						}
 					?>
                     </table>
@@ -175,6 +177,8 @@
 										echo '</tr>';
 								}
 							}
+						} else {
+							echo('<tr><td colspan=2>No successful matches at this time.</td></tr>');
 						}
 					/*?>
 						
