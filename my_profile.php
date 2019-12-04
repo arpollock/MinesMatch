@@ -55,13 +55,13 @@
 								$result2 = $stmt->get_result();
 								$answer = $result2->fetch_assoc();
 								if($row['question_id'] == 1){
-									echo '<p class="gen-info">' . $answer['question_answer'] . '</p>';
+									echo '<span class="gen-info">' . $answer['question_answer'] . ' | '  . '</span>';
 								}
 								if($row['question_id'] == 3){
-									echo '<p class="gen-info">' . $answer['question_answer'] . '</p>';
+									echo '<span class="gen-info">' . $answer['question_answer'] . ' | '  . '</span>';
 								}
 								if($row['question_id'] == 5){
-									echo '<p class="gen-info">' . "Class of " .$answer['question_answer'] . '</p>';
+									echo '<span class="gen-info">' . "Class of " .$answer['question_answer'] . '</span>';
 								}
 								if($row['question_id'] == 10){
 									echo '<p class="gen-info">BIO: ' . $answer['question_answer'] . '</p>';

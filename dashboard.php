@@ -8,18 +8,47 @@
 	include "databse_conn.php";
 ?>
 <?php
-	//Add in user to the matches database, with the potential to match to every user. Set state = 1, pending both 
+	// Add in user to the matches database, with the potential to match to every user. Set state = 0, pending both 
 	$state = 0;
-	$u1id = $_COOKIE['user'];
-	$sql = "SELECT user_id FROM user WHERE user_id <> $u1id";
-	$result = $conn->query($sql);
-	if($result->num_rows > 0){
-		while($row = $result->fetch_assoc()){
-			//check to make sure that the pair isn't already in in the form of u2, u1
-			$sql2 = "INSERT INTO matches(user1_id, user2_id, match_state) VALUES(?,?,?)";
-			$stmt = $conn->prepare($sql2);
-			$stmt->bind_param("iii", $u1id, $row['user_id'], $state);
-			$stmt->execute();
+	$my_uid = $_COOKIE['user'];
+
+	//get the gender they want to match with
+	$my_genderpref_statement = "SELECT question_answer FROM preference WHERE question_id=2 AND user_id=?";
+	$my_genderpref_sql = $conn->prepare($my_genderpref_statement);
+	$my_genderpref_sql->bind_param("i", $my_uid);
+	$my_genderpref_sql->execute();
+	$my_genpref = $my_genderpref_sql->get_result();
+	$my_gender_pref = $my_genpref->fetch_assoc();
+	$gender_real_pref = $my_gender_pref['question_answer'];
+
+	$sql_get_all_possible_matches = "SELECT user_id FROM user WHERE user_id <> $my_uid;";
+	$result_all_possib = $conn->query($sql_get_all_possible_matches);
+	if($result_all_possib->num_rows > 0){
+		while($row = $result_all_possib->fetch_assoc()){
+			//get the gender of the other user
+			$gendersql = $conn->prepare("SELECT question_answer FROM preference WHERE question_id=1 AND user_id=?;");
+			$gendersql->bind_param("i", $row['user_id']);
+			$gendersql->execute();
+			$gen2 = $gendersql->get_result();
+			$gender2 = $gen2->fetch_assoc();
+			$genderReal = $gender2['question_answer'];
+			
+			//if the gender prefs match, then display
+			$compare = strcmp($gender_real_pref,$genderReal);
+			if($gender_real_pref == 'both') {
+				$compare = 0;
+			}
+			// see if already is a match
+			$stmt_get_match = $conn->prepare("SELECT * FROM MATCHES WHERE (user1_id=? AND user2_id=?) OR (user1_id=? AND user2_id=?);");
+			$stmt_get_match->bind_param("iiii", $my_uid, $row['user_id'], $row['user_id'], $my_uid);
+			$stmt_get_match->execute();
+			$stmt_get_match_result = $stmt_get_match->get_result();
+			if($compare == 0 && $stmt_get_match_result->num_rows == 0){
+				$sql_create_match = "INSERT INTO matches(user1_id, user2_id, match_state) VALUES(?,?,?);";
+				$stmt_create_match = $conn->prepare($sql_create_match);
+				$stmt_create_match->bind_param("iii", $my_uid, $row['user_id'], $state);
+				$stmt_create_match->execute();
+			}
 		}
 	}
 ?>
@@ -62,50 +91,43 @@
                            <th>Last Name</th> 
                         </tr>
 					<?php
-						$u1id = $_COOKIE['user']; 
-						$sql = "SELECT user2_id FROM matches WHERE (user1_id=$u1id OR user2_id=$u1id) AND (match_state=0 OR match_state=1 OR match_state=2);";
-						$result = $conn->query($sql);
-						if($result->num_rows > 0){
-							while($row = $result->fetch_assoc()){
-								//get the gender they want to match with
-								$genderprefsql = "SELECT question_answer FROM preference WHERE question_id=2 AND user_id=?;";
-								$genderprefsql = $conn->prepare($genderprefsql);
-								$genderprefsql->bind_param("i", $u1id);
-								$genderprefsql->execute();
-								$genpref = $genderprefsql->get_result();
-								$genderpref = $genpref->fetch_assoc();
-								$genderRealPref = $genderpref['question_answer'];
-								
-								//get the gender of the other user
-								$gendersql = "SELECT question_answer FROM preference WHERE question_id=1 AND user_id=?;";
-								$gendersql = $conn->prepare($gendersql);
-								$gendersql->bind_param("i", $row['user2_id']);
-								$gendersql->execute();
-								$gen2 = $gendersql->get_result();
-								$gender2 = $gen2->fetch_assoc();
-								$genderReal = $gender2['question_answer'];
-								
-								//if the gender prefs match, then display
-								$compare = strcmp($genderRealPref,$genderReal);
-								if($compare == 0){
-								
-									$sql2 = "SELECT first_name, last_name FROM user WHERE user_id=?;";
-									$stmt = $conn->prepare($sql2);
-									$stmt->bind_param("i", $row['user2_id']);
-									$stmt->execute();
-									$result2 = $stmt->get_result();
-									$u2 = $row['user2_id'];
-								
-									?>
+						$sql_p_matches = "SELECT * FROM matches WHERE (user1_id=$my_uid OR user2_id=$my_uid) AND (match_state=0 OR match_state=1 OR match_state=2);";
+						$result_p_matches = $conn->query($sql_p_matches);
+						if($result_p_matches->num_rows > 0){
+							while ( $row = $result_p_matches->fetch_assoc() ) {
+								$user1_id = -1; 
+								$user2_id = -1;
+								$their_uid = -1;
+
+								if($row['user1_id'] == $my_uid) { // i am 1 and they are 2
+									$user1_id = $my_uid;
+									$user2_id = $row['user2_id'];
+									$their_uid = $row['user2_id'];
+								} else if($row['user2_id'] == $my_uid) { // i am 2 and they are 1
+									$user2_id = $my_uid;
+									$user1_id = $row['user1_id'];
+									$their_uid = $row['user1_id'];
+								} else {
+									echo('id assignment failed');
+								}
+
+								$sql_p_match_name = "SELECT first_name, last_name FROM user WHERE user_id=?;";
+								$stmt_p_match_name = $conn->prepare($sql_p_match_name);
+								$stmt_p_match_name->bind_param("i", $their_uid);
+								$stmt_p_match_name->execute();
+								$result_p_match_name = $stmt_p_match_name->get_result();
+								$u2 = $their_uid;
+					?>
 									<tr onclick="window.location='./other_profile.php?uid=<?php echo $u2; ?>';">
-									<?php
-									while($names = $result2->fetch_assoc()){
-										echo '<td>' .$names['first_name']. '</td>';
-										echo '<td>' .$names['last_name']. '</td>';
-										echo '</tr>';
-									}
+					<?php
+								while( $pnames = $result_p_match_name->fetch_assoc() ){
+									echo '<td>' .$pnames['first_name']. '</td>';
+									echo '<td>' .$pnames['last_name']. '</td>';
+									echo '</tr>';
 								}
 							}
+						} else {
+							echo('<tr><td colspan=2>No pending matches at this time.</td></tr>');
 						}
 					?>
                     </table>
@@ -119,26 +141,44 @@
                            <th>Last Name</th> 
                         </tr>
 						<?php
-						$sql = "SELECT user2_id FROM matches WHERE (user1_id=$u1id OR user2_id=$u1id) AND match_state=3;";
-						$result = $conn->query($sql);
-						if($result->num_rows > 0){
-							while($row = $result->fetch_assoc()){
-								$sql2 = "SELECT first_name, last_name FROM user WHERE user_id=?";
-								$stmt = $conn->prepare($sql2);
-								$stmt->bind_param("i", $row['user2_id']);
-								$stmt->execute();
-								$result2 = $stmt->get_result();
-								$u2 = $row['user2_id'];
+						$sql_s_matches = "SELECT * FROM matches WHERE (user1_id=$my_uid OR user2_id=$my_uid) AND match_state=3;";
+						$result_s_matches = $conn->query($sql_s_matches);
+						if($result_s_matches->num_rows > 0){
+							while($row = $result_s_matches->fetch_assoc()){
+								$user1_id = -1; 
+								$user2_id = -1;
+								$their_uid = -1;
+
+								if($row['user1_id'] == $my_uid) { // i am 1 and they are 2
+									$user1_id = $my_uid;
+									$user2_id = $row['user2_id'];
+									$their_uid = $row['user2_id'];
+								} else if($row['user2_id'] == $my_uid) { // i am 2 and they are 1
+									$user2_id = $my_uid;
+									$user1_id = $row['user1_id'];
+									$their_uid = $row['user1_id'];
+								} else {
+									echo('id assignment failed');
+								}
+
+								$sql2_s_matches = "SELECT first_name, last_name FROM user WHERE user_id=?";
+								$stmt_s_matches = $conn->prepare($sql2_s_matches);
+								$stmt_s_matches->bind_param("i", $their_uid);
+								$stmt_s_matches->execute();
+								$result2_s_matches = $stmt_s_matches->get_result();
+								$u2 = $their_uid;
 								?>
 								<tr onclick="window.location='./other_profile.php?uid=<?php echo $u2;?>';">
 								<?php
-								while($names = $result2->fetch_assoc()){
+								while($names = $result2_s_matches->fetch_assoc()){
 									//echo '<tr onclick="window.location="./other_profile.php?uid=123&p=0";">';
 										echo '<td>' .$names['first_name']. '</td>';
 										echo '<td>' .$names['last_name']. '</td>';
 										echo '</tr>';
 								}
 							}
+						} else {
+							echo('<tr><td colspan=2>No successful matches at this time.</td></tr>');
 						}
 					/*?>
 						
