@@ -4,6 +4,14 @@
 	$process_login = "./process_login.php";
 	$cookieName = "user";
 ?>
+<?php
+	$userID = $_POST['userID'];
+	setcookie($cookieName, $userID, time()-6600);
+?>
+<?php
+	header("location: ./login.php");
+	exit();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>  
@@ -19,21 +27,11 @@
         <script src="./scripts/login.js"></script>
 		<script>
 			window.onload = function logout() {
-			alert("Logout successful!");
+				alert("Logout successful!");
 			};
 		</script>
-    </head>
-		
-	<body onload="logout()">
-	</body>
-	<?php
-		$userID = $_POST['userID'];
-		setcookie($cookieName, $userID, time()-6600);
-	?>
-	<?php
-		header("location: ./login.php");
-		exit();
-	?>
+    </head>	
+	<body onload="logout()"></body>
 </html>
 
 
