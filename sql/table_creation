@@ -46,3 +46,32 @@ CREATE TABLE `matches` (
  CONSTRAINT `matches_ibfk_1` FOREIGN KEY (`user1_id`) REFERENCES `user` (`user_id`),
  CONSTRAINT `matches_ibfk_2` FOREIGN KEY (`user2_id`) REFERENCES `user` (`user_id`)
 );
+
+INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
+VALUES (1, 'What is your gender?', '', 0)
+
+INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
+VALUES (2, 'What genders would you like to match with?', '', 0)
+
+INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
+VALUES (3, 'What is your major?', '', 0)
+
+INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
+VALUES (4, 'What majors are you interested in?', '', 0)
+
+INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
+VALUES (5, 'What year are you graduating?', '', 0)
+
+INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
+VALUES (6, 'What graduation years are you interested in?', '', 0)
+
+INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
+VALUES (7, 'What is your ideal date?', '', 0)
+
+INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
+VALUES (8, 'What is your nerdiest characteristic?', '', 0)
+
+INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
+VALUES (9, 'What is your favorite place in Golden?', '', 0)
+
+
