@@ -19,12 +19,11 @@
 <?php
 	include('databse_conn.php');
 	
-	
 	// checking cookie (DON'T DO ON login page itself -- only on all user-necessary pages)
 	// if(!isset($_COOKIE["user"])) {
 	// 	header("./login.php");
 	// }
-	
+
 	if(isset($_POST['submit'])) {
 		
 		// Setting variables
@@ -55,12 +54,12 @@
 					header('Location: ./dashboard.php');
 				}
 				else {
-					$message_returning = "Password was incorrect.";
+					$message_returning = "Your Mines Match Password was not a Match!!";
 				}
 			}
 		}
 		else {
-			$message_returning = "Email was incorrect";
+			$message_returning = "Your Mines Match Email was not a Match!!";
 		}
 	}
 	
@@ -104,7 +103,7 @@
 				$stmt3->execute();
 				
 				$cookieValue = $row['user_id'];
-				setcookie($cookieName, $cookieVallue, time()+3600, "/");
+				setcookie($cookieName, $cookieValue, time()+3600, "/");
 				header('Location: ./edit_profile.php');
 			}
 			else {
