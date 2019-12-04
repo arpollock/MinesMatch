@@ -10,8 +10,11 @@
 	$message_returning = "";
 	$cookieName = "user";
 	$cookieValue;
+	$time = $_SERVER['REQUEST_TIME'];
+	$timeout_duration = 1800;
 
-	$mail = true;
+	$mail_attempt = false;
+	$mail = false;
 
 	$cookieUserType = "user_type";
 	$cookieUserTypeValue = "returning";
@@ -52,8 +55,9 @@
 			
 			while($row = $result->fetch_assoc()){
 				if(($password == $row['password'])){
+					
 					$userID = $row['user_id'];
-					setcookie($cookieName, $userID, time()+3600);
+					setcookie($cookieName, $userID, time()+ (60*10));
 					header('Location: ./dashboard.php');
 				}
 				else {
@@ -108,6 +112,7 @@
 				// echo($user_id ." ". $email ." ". $password ." ". $hash);
 				$stmt_login->bind_param("isss", $user_id, $email, $password, $hash);
 				$stmt_login->execute();
+				$mail_attempt = true;
 				
 				//send the activation email to the new user
 				// $to = "eclm123@gmail.com";
@@ -125,9 +130,11 @@
 				'; //CHANGE FOR ACTUAL DIRECTORY!!!!!!!!!
 				$headers = "From: may.emma127@gmail.com" . "\r\n";
 				$mail = mail($to, $subject, $body, $headers);
-				// $cookieValue = $user_id;
-				// setcookie($cookieName, $cookieValue, time()+3600, "/");
-				// header('Location: ./edit_profile.php');
+
+				$cookieValue = $user_id;
+				setcookie($cookieName, $cookieValue, time()+(10*60), "/");
+				header('Location: ./edit_profile.php');
+
 			}
 			else {
 				$message_new = "Passwords did not match!";
@@ -203,10 +210,12 @@
                 <h1>Welcome to Mines Match!</h1>
                 <p>The online dating service for geeks, by geeks.</p>
 				<?php
-				if($mail){
-					echo "SUCCESS";
-				}else{
-					echo "FAIL";
+				if($mail_attempt) {
+					if($mail){
+						echo "Account created successfully! Check your email to finish the process.";
+					}else{
+						echo "Account creation failed. ): Please try again.";
+					}
 				}
 				?>
 				
