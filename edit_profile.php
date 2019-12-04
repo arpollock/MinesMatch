@@ -25,6 +25,20 @@
 			$clear = $conn->prepare($clearsql);
 			$clear->bind_param('i', $u1id);
 			$clear->execute();
+			
+			$sql_check = "SELECT * FROM preference WHERE user_id = ? AND question_id > 6";
+			$stmt = $conn->prepare($sql_check);
+			$stmt->bind_param('i', $u1id);
+			$stmt->execute();
+			$result = $stmt->get_result();
+			$count = mysqli_num_rows($result);
+			$insert = false;
+			
+			if($count < 3){
+				$insert = true;
+			}
+			
+			
 			//Insert question answers into the database
 			$sql = "INSERT INTO preference(user_id, question_id, question_answer) VALUES(?, ?, ?)";
 			$stmt = $conn->prepare($sql);
@@ -55,21 +69,40 @@
 			$updatesql = "UPDATE preference SET question_answer=? WHERE question_id=?";
 			$update = $conn->prepare($updatesql);
 			
-			$ideal_date_p = 7;
-			$update->bind_param("si", $_POST['ideal_date'], $ideal_date_p);
-			$update->execute();
-			
-			$nerd_char = 8;
-			$update->bind_param("si", $_POST['nerdiness'], $nerd_char);
-			$update->execute();
-			
-			$golden = 9;
-			$update->bind_param("si", $_POST['place'], $golden);
-			$update->execute();
-			
-			$bio = 10;
-			$stmt->bind_param('iis', $ulid, $bio, $_POST['bio']);
-			$stmt->execute();
+			if(!$insert){
+				$ideal_date_p = 7;
+				$update->bind_param("si", $_POST['ideal_date'], $ideal_date_p);
+				$update->execute();
+				
+				$nerd_char = 8;
+				$update->bind_param("si", $_POST['nerdiness'], $nerd_char);
+				$update->execute();
+				
+				$golden = 9;
+				$update->bind_param("si", $_POST['place'], $golden);
+				$update->execute();
+				
+				$bio = 10;
+				$update->bind_param('si', $_POST['bio'], $bio);
+				$update->execute();
+			}
+			else {
+				$ideal_date_p = 7;
+				$stmt->bind_param('iis', $u1id, $ideal_date_p, $_POST['ideal_date']);
+				$stmt->execute();
+				
+				$nerd_char = 8;
+				$stmt->bind_param('iis', $u1id, $nerd_char, $_POST['nerdiness']);
+				$stmt->execute();
+				
+				$golden = 9;
+				$stmt->bind_param('iis', $u1id, $golden, $_POST['place']);
+				$stmt->execute();
+				
+				$bio = 10;
+				$stmt->bind_param('iis', $u1id, $bio, $_POST['bio']);
+				$stmt->execute();
+			}
 			
 			header('Location: ./my_profile.php');
 		}
@@ -159,6 +192,14 @@
 				$prefs = $sqlPref->get_result();
 				$pref = $prefs->fetch_assoc();
 				$place_fave = $pref['question_answer'];
+				//value bind for bio
+				$sqlPrefs = "SELECT question_answer FROM preference WHERE user_id = ? AND question_id=10";
+				$sqlPref = $conn->prepare($sqlPrefs);
+				$sqlPref->bind_param("i", $u1id);
+				$sqlPref->execute();
+				$prefs = $sqlPref->get_result();
+				$pref = $prefs->fetch_assoc();
+				$bio_full = $pref['question_answer'];
 				
 			?>
             <form id="edit_preferences" method="POST">
@@ -196,7 +237,7 @@
 
                     <label for="bio">Your bio:</label>
                     <br/>
-                    <textarea name="bio" id="bio" class="pinfo-input"></textarea>
+                    <textarea name="bio" id="bio" class="pinfo-input"><?php echo $bio_full;?></textarea>
 
                 </fieldset>
                 <fieldset>

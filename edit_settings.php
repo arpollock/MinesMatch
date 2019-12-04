@@ -73,7 +73,8 @@
         <section class="main-content">
             <h2>Edit My Settings</h2>
 			
-            <form id="edit_settings" method="POST">
+			<fieldset>
+            <form id="edit_preferences" method="POST">
                 <div class="flex-input">
                     <label for="first">First Name: </label>
                     <input type="text" name="first" id="first_name" class="login-text-input" value="<?php echo ucfirst($first) ?>" required>
@@ -83,7 +84,9 @@
                     <input type="last" name="last" id="last_name" class="login-text-input" value="<?php echo ucfirst($last) ?>" required>
 
                 </div>
+				</fieldset>
                 <br/>
+				<fieldset>
                 <div class="flex-input">
                     <label for="curr_password">Current Password: </label>
                     <input type="password" name="curr_password" id="curr_password" class="login-text-input" placeholder="Enter Current Password" required>
@@ -102,7 +105,8 @@
                 <span class="error">* <?php echo $message ?></span>
                 <br>
                 <input type="submit" name="change_settings" value="Submit" class="submit-login button"/>
-            </form>
+            </fieldset>
+			</form>
         </section>
         <?php include './templateFooter.php'; ?>
     </body>

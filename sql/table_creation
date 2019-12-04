@@ -7,15 +7,14 @@ CREATE TABLE `user` (
  PRIMARY KEY (`user_id`)
 );
 
-CREATE TABLE `login` (
- `user_id` int(11) NOT NULL,
- `email` varchar(256) NOT NULL,
- `password` varchar(256) NOT NULL,
- `hash` varchar(32) NOT NULL,
- `active` tinyint(1) NOT NULL DEFAULT 0,
- PRIMARY KEY (`email`,`password`),
- KEY `user_id` (`user_id`),
- CONSTRAINT `login_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+CREATE TABLE `matches` (
+ `user1_id` int(11) NOT NULL,
+ `user2_id` int(11) NOT NULL,
+ `match_state` enum('0','1','2','3') NOT NULL,
+ PRIMARY KEY (`user2_id`,`user1_id`),
+ KEY `user1_id` (`user1_id`,`user2_id`),
+ CONSTRAINT `matches_ibfk_1` FOREIGN KEY (`user1_id`) REFERENCES `user` (`user_id`),
+ CONSTRAINT `matches_ibfk_2` FOREIGN KEY (`user2_id`) REFERENCES `user` (`user_id`)
 );
 
 CREATE TABLE `question` (
@@ -35,16 +34,18 @@ CREATE TABLE `preference` (
  KEY `user_id` (`user_id`,`question_id`),
  CONSTRAINT `preference_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
  CONSTRAINT `preference_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `question` (`question_id`)
-); 
+);
 
-CREATE TABLE `matches` (
- `user1_id` int(11) NOT NULL,
- `user2_id` int(11) NOT NULL,
- `match_state` int(11) NOT NULL DEFAULT 1,
- PRIMARY KEY (`user2_id`,`user1_id`),
- KEY `user1_id` (`user1_id`,`user2_id`),
- CONSTRAINT `matches_ibfk_1` FOREIGN KEY (`user1_id`) REFERENCES `user` (`user_id`),
- CONSTRAINT `matches_ibfk_2` FOREIGN KEY (`user2_id`) REFERENCES `user` (`user_id`)
+
+CREATE TABLE `login` (
+ `user_id` int(11) NOT NULL,
+ `email` varchar(256) NOT NULL,
+ `password` varchar(256) NOT NULL,
+ `hash` varchar(32) NOT NULL,
+ `active` tinyint(1) NOT NULL DEFAULT 0,
+ PRIMARY KEY (`email`,`password`),
+ KEY `user_id` (`user_id`),
+ CONSTRAINT `login_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 );
 
 INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
@@ -73,5 +74,8 @@ VALUES (8, 'What is your nerdiest characteristic?', '', 0);
 
 INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`)
 VALUES (9, 'What is your favorite place in Golden?', '', 0);
+
+INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`)
+VALUES (10, 'Bio: ', '', 0);
 
 
