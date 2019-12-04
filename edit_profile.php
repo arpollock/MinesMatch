@@ -2,16 +2,11 @@
 	if(!isset($_COOKIE['user'])){
 		header("location: ./login.php");
 	}
-	
     $current_page = "edit_profile";
     $path_to_home = "./";
 	
-	include "databse_conn.php";
-	
-?>
-
-
-<?php
+    include "databse_conn.php";
+    
 	// Form Validation
 	$required = array('gender', 'orientation', 'major', 'majors_pref', 'grad_year', 'grad_year_pref');
 	$error = false;
@@ -73,13 +68,9 @@
 			header('Location: ./my_profile.php');
 		}
 	}
-	
 	if(isset($_POST['cancel'])){
 		header('Location: ./my_profile.php');
 	}
-?>
-
-<?php
 	//Add in user to the matches database, with the potential to match to every user. Set state = 1, pending both 
 	$state = 1;
 	$u1id = $_COOKIE['user'];
@@ -94,7 +85,6 @@
 		}
 	}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>  
@@ -147,6 +137,13 @@
                     <br/>
                     <input type="radio" name="orientation" id="both" class="pinfo-input" value="both"/>
                     <label for="both">Both!</label>
+                    <br/>
+                    <br/>
+
+                    <label for="bio">Your bio:</label>
+                    <br/>
+                    <textarea name="bio" id="bio" class="pinfo-input"></textarea>
+
                 </fieldset>
                 <fieldset>
                     <legend>Academic Information</legend>

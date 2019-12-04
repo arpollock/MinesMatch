@@ -1,6 +1,5 @@
 <?php
 	include('databse_conn.php');
-	
 	$message_new = '';
 	$message_success = '';
 	
@@ -44,7 +43,6 @@
 	}
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>  

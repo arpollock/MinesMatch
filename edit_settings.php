@@ -2,7 +2,6 @@
 	if(!isset($_COOKIE['user'])){
 		header("location: ./login.php");
 	}
-	
     $current_page = "edit_settings";
     $path_to_home = "./";
 	
@@ -33,12 +32,8 @@
 			$stmt->bind_param("ss", $new_pass, $email);
 			$stmt->execute();
 		}
-		
-		
 	}
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>  
