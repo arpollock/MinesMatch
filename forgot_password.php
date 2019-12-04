@@ -2,6 +2,7 @@
 	include('databse_conn.php');
 	
 	$message_new = '';
+	$message_success = '';
 	
 	if(isset($_POST['reset'])) {
 		$email = $_POST['email'];
@@ -13,7 +14,7 @@
 		$count = mysqli_num_rows($result);
 		
 		if($count == 1){
-			echo "Send email to user with password";
+			// echo "Send email to user with password";
 			
 			// Random Pass Generation
 			$char = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -29,14 +30,14 @@
 			$stmt->bind_param("ss", $new_pass, $email);
 			$stmt->execute();
 			
-			$msg = "Here is your password: " . $password . "\n Click here to login: http://localhost/MinesMatch/MinesMatch/login.php";
+			$msg = "Here is your password: " . $new_pass . "\n You can change this at My Profile>Edit Settings.\n Click here to login: http://localhost/MinesMatch/MinesMatch/login.php";
 			$msg = wordwrap($msg, 70);
 			$subject = "Passowrd Reset";
 			mail($email, $subject, $msg);
-			$message_new = "Email has been sent!";
+			$message_success = "Email has been sent!";
 		}
 		else {
-				$message_new = "*Email not found";
+				$message_new = "* Email not found";
 		}
 		
 	}
@@ -78,7 +79,11 @@
 				
 				<?php
 					if(isset($_POST['reset'])){
-						echo "<span class='error'>" . $message_new . "</span>";
+						if($message_success != '') {
+							echo "<span>" . $message_success . "</span>";
+						} else {
+							echo "<span class='error'>" . $message_new . "</span>";
+						}
 					}
 					else {
 						echo "<span class='error'>*</span>";
