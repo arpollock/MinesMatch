@@ -44,7 +44,7 @@
                     <hr/>
 					<!-- TODO: update this from the database-->
 					<?php
-						$sql = "SELECT question_text, question_id FROM question WHERE question_id < 7";
+						$sql = "SELECT question_text, question_id FROM question";// WHERE question_id < 7";
 						$result = $conn->query($sql);
 						if($result->num_rows > 0){
 							while($row = $result->fetch_assoc()){
@@ -63,10 +63,12 @@
 								if($row['question_id'] == 5){
 									echo '<p class="gen-info">' . "Class of " .$answer['question_answer'] . '</p>';
 								}
+								if($row['question_id'] == 10){
+									echo '<p class="gen-info">BIO: ' . $answer['question_answer'] . '</p>';
+								}
 						}
 					 }
 					?>
-                    <p>This is my main bio blurb! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
                 </div>          
             </section>
             <hr/>

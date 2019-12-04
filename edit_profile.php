@@ -52,17 +52,23 @@
 			/*$grad_p = 6;
 			$stmt->bind_param('iis', $u1id, $grad_p, $_POST['grad_year_pref']);
 			$stmt->execute();*/
+			$updatesql = "UPDATE preference SET question_answer=? WHERE question_id=?";
+			$update = $conn->prepare($updatesql);
 			
 			$ideal_date_p = 7;
-			$stmt->bind_param('iis', $u1id, $ideal_date_p, $_POST['ideal_date']);
-			$stmt->execute();
+			$update->bind_param("si", $_POST['ideal_date'], $ideal_date_p);
+			$update->execute();
 			
 			$nerd_char = 8;
-			$stmt->bind_param('iis', $u1id, $nerd_char, $_POST['nerdiness']);
-			$stmt->execute();
+			$update->bind_param("si", $_POST['nerdiness'], $nerd_char);
+			$update->execute();
 			
 			$golden = 9;
-			$stmt->bind_param('iis', $u1id, $golden, $_POST['place']);
+			$update->bind_param("si", $_POST['place'], $golden);
+			$update->execute();
+			
+			$bio = 10;
+			$stmt->bind_param('iis', $ulid, $bio, $_POST['bio']);
 			$stmt->execute();
 			
 			header('Location: ./my_profile.php');
@@ -129,6 +135,31 @@
 				$prefs = $sqlPref->get_result();
 				$pref = $prefs->fetch_assoc();
 				$gy = $pref['question_answer'];
+				//value bind for ideal date
+				$sqlPrefs = "SELECT question_answer FROM preference WHERE user_id = ? AND question_id=7";
+				$sqlPref = $conn->prepare($sqlPrefs);
+				$sqlPref->bind_param("i", $u1id);
+				$sqlPref->execute();
+				$prefs = $sqlPref->get_result();
+				$pref = $prefs->fetch_assoc();
+				$date_ideal = $pref['question_answer'];
+				//value bind for nerdiest characteristic
+				$sqlPrefs = "SELECT question_answer FROM preference WHERE user_id = ? AND question_id=8";
+				$sqlPref = $conn->prepare($sqlPrefs);
+				$sqlPref->bind_param("i", $u1id);
+				$sqlPref->execute();
+				$prefs = $sqlPref->get_result();
+				$pref = $prefs->fetch_assoc();
+				$char_nerdy = $pref['question_answer'];
+				//value bind for fave golden place
+				$sqlPrefs = "SELECT question_answer FROM preference WHERE user_id = ? AND question_id=9";
+				$sqlPref = $conn->prepare($sqlPrefs);
+				$sqlPref->bind_param("i", $u1id);
+				$sqlPref->execute();
+				$prefs = $sqlPref->get_result();
+				$pref = $prefs->fetch_assoc();
+				$place_fave = $pref['question_answer'];
+				
 			?>
             <form id="edit_preferences" method="POST">
                 <fieldset>
@@ -329,19 +360,19 @@
 
                     <label for="ideal_date">What is your ideal date?</label>
                     <br/>
-                    <textarea name="ideal_date" id="ideal_date" class="pinfo-input"></textarea>
+                    <textarea name="ideal_date" id="ideal_date" class="pinfo-input"><?php echo $date_ideal;?></textarea>
                     <br/>
                     <br/>
 
                     <label for="nerdiness">What is your nerdiest characteristic?</label>
                     <br/>
-                    <textarea name="nerdiness" id="nerdiness" class="pinfo-input"></textarea>
+                    <textarea name="nerdiness" id="nerdiness" class="pinfo-input"><?php echo $char_nerdy;?></textarea>
                     <br/>
                     <br/>
 
                     <label for="place">What is your favorite place in Golden?</label>
                     <br/>
-                    <textarea name="place" id="place" class="pinfo-input"></textarea>
+                    <textarea name="place" id="place" class="pinfo-input"><?php echo $place_fave;?></textarea>
                 
                 </fieldset>
                 <div class="preference-buttons">
