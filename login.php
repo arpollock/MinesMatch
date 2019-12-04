@@ -10,6 +10,8 @@
 	$message_returning = "";
 	$cookieName = "user";
 	$cookieValue;
+	$time = $_SERVER['REQUEST_TIME'];
+	$timeout_duration = 1800;
 
 	$mail = true;
 
@@ -52,8 +54,9 @@
 			
 			while($row = $result->fetch_assoc()){
 				if(($password == $row['password'])){
+					
 					$userID = $row['user_id'];
-					setcookie($cookieName, $userID, time()+3600);
+					setcookie($cookieName, $userID, time()+ (60*10));
 					header('Location: ./dashboard.php');
 				}
 				else {
@@ -124,7 +127,7 @@
 				
 				
 				$cookieValue = $row['user_id'];
-				setcookie($cookieName, $cookieValue, time()+3600, "/");
+				setcookie($cookieName, $cookieValue, time()+30, "/");
 				header('Location: ./edit_profile.php');
 			}
 			else {

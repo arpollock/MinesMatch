@@ -12,12 +12,30 @@
 		
 		if($count == 1){
 			echo "Send email to user with password";
-			$password = 
+			
+			// Random Pass Generation
+			$char = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			$randomString = '';
+			for($i = 0; $i < 5; i++){
+				$index = rand(0, strlen($char) - 1);
+				$randomString .= $char[$index];
+			}
+			
+			$new_pass = $randomString;
+			
+			$stmt = $conn->prepare("UPDATE login SET password = ? WHERE email = ?");
+			$stmt->bind_param("ss", $new_pass, $email);
+			$stmt->execute();
+			
 			$msg = "Here is your password: " . $password . "\n Click here to login: http://localhost/MinesMatch/MinesMatch/login.php";
 			$msg = wordwrap($msg, 70);
 			$subject = "Passowrd Reset";
 			mail($email, $subject, $msg);
 		}
+		else {
+				echo "Fudge";
+		}
+		
 	}
 
 ?>
