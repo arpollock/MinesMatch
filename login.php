@@ -90,35 +90,28 @@
 				
 				// Create the new user and add them into the user database
 				// echo($firstName ." ". $lastName);
-				$stmt = $conn->prepare("INSERT INTO user(first_name, last_name, gender) VALUES(?, ?, ?);");
+				$stmt_user = $conn->prepare("INSERT INTO user(first_name, last_name, gender) VALUES(?, ?, ?);");
 				$gender = 'Prefer not to Answer';
-				$stmt->bind_param("sss", $firstName, $lastName, $gender);
-				$stmt_value = $stmt->execute();
+				$stmt_user->bind_param("sss", $firstName, $lastName, $gender);
+				$stmt_user_value = $stmt_user->execute();
 				$user_id = -1;
-				if ($stmt_value) {
+				if ($stmt_user_value) {
 					$user_id = $conn->insert_id;
 					// echo "New record created successfully. Last inserted ID is: " . $user_id;
 				} else {
-					// echo "Error: " . $sql . "<br>" . $conn->error;
+					// echo "Error: " . $stmt . "<br>" . $conn->error;
 				}
-				
-				// $stmt2 = $conn->prepare("SELECT user_id FROM user WHERE first_name = ? AND last_name = ?;");
-				// $stmt2->bind_param("ss", $firstName, $lastName);
-				// $stmt2->execute();
-				// $result = $stmt2->get_result();
-				// $row = $result->fetch_assoc();
-				// $userID = $row['user_id'];
 				
 				// Add the rest of their information into the login so they can get back in
 				$hash = md5(rand(0,1000));
-				$stmt3 = $conn->prepare("INSERT INTO login(user_id, email, password, hash) VALUES (?, ?, ?, ?);");
-				// $stmt3->bind_param("isss", $row['user_id'], $email, $password, $hash);
-				echo($user_id ." ". $email ." ". $password ." ". $hash);
-				$stmt3->bind_param("isss", $user_id, $email, $password, $hash);
-				$stmt3->execute();
+				$stmt_login = $conn->prepare("INSERT INTO login(user_id, email, password, hash) VALUES (?, ?, ?, ?);");
+				// echo($user_id ." ". $email ." ". $password ." ". $hash);
+				$stmt_login->bind_param("isss", $user_id, $email, $password, $hash);
+				$stmt_login->execute();
 				
 				//send the activation email to the new user
-				$to = "eclm123@gmail.com";
+				// $to = "eclm123@gmail.com";
+				$to = $email;
 				$subject = 'Account Verification';
 				$body = '
 				Thanks for siging up for Mines Match! 
@@ -127,16 +120,14 @@
 				Username: ' . $email . '
 				Password: ' . $password . '
 				
-				Please click this link to activate your account:
+				Please copy and paste this link into your browser to activate your account:
 				localhost/all/MinesMatch/verify.php?email='.$email.'&hash='.$hash.'
 				'; //CHANGE FOR ACTUAL DIRECTORY!!!!!!!!!
 				$headers .= "From: may.emma127@gmail.com" . "\r\n";
 				$mail = mail($to, $subject, $body, $headers);
-				
-				
-				$cookieValue = $row['user_id'];
-				setcookie($cookieName, $cookieValue, time()+3600, "/");
-				header('Location: ./edit_profile.php');
+				// $cookieValue = $user_id;
+				// setcookie($cookieName, $cookieValue, time()+3600, "/");
+				// header('Location: ./edit_profile.php');
 			}
 			else {
 				$message_new = "Passwords did not match!";
