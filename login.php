@@ -15,12 +15,6 @@
 <?php
 	include('databse_conn.php');
 	
-	
-	// checking cookie
-	if(!isset($_COOKIE["user"])) {
-		header("./login.php");
-	}
-	
 	if(isset($_POST['submit'])) {
 		
 		// Setting variables
@@ -51,12 +45,12 @@
 					header('Location: ./dashboard.php');
 				}
 				else {
-					$message = "Password was incorrect.";
+					$message = "Your Mines Match Password was not a Match!!";
 				}
 			}
 		}
 		else {
-			$message = "Email was incorrect";
+			$message = "Your Mines Match Email was not a Match!!";
 		}
 	}
 	
@@ -100,7 +94,7 @@
 				$stmt3->execute();
 				
 				$cookieValue = $row['user_id'];
-				setcookie($cookieName, $cookieVallue, time()+3600, "/");
+				setcookie($cookieName, $cookieValue, time()+3600, "/");
 				header('Location: ./edit_profile.php');
 			}
 			else {
