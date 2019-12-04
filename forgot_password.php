@@ -1,6 +1,8 @@
 <?php
 	include('databse_conn.php');
 	
+	$message_new = '';
+	
 	if(isset($_POST['reset'])) {
 		$email = $_POST['email'];
 		
@@ -16,7 +18,7 @@
 			// Random Pass Generation
 			$char = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			$randomString = '';
-			for($i = 0; $i < 5; i++){
+			for($i = 0; $i < 5; $i++){
 				$index = rand(0, strlen($char) - 1);
 				$randomString .= $char[$index];
 			}
@@ -31,9 +33,10 @@
 			$msg = wordwrap($msg, 70);
 			$subject = "Passowrd Reset";
 			mail($email, $subject, $msg);
+			$message_new = "Email has been sent!";
 		}
 		else {
-				echo "Fudge";
+				$message_new = "*Email not found";
 		}
 		
 	}
@@ -74,8 +77,8 @@
 				</div>
 				
 				<?php
-					if(isset($_POST['submit'])){
-						echo "<span class='error'>*" . $message . "</span>";
+					if(isset($_POST['reset'])){
+						echo "<span class='error'>" . $message_new . "</span>";
 					}
 					else {
 						echo "<span class='error'>*</span>";

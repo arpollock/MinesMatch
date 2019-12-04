@@ -44,7 +44,7 @@
 		
 		// Execute
 		// Select from DB with prepared statements to see if valid user
-		$stmt = $conn->prepare("Select * from login where email = ?");
+		$stmt = $conn->prepare("Select * from login where email = ?;");
 		$stmt->bind_param("s", $email);
 		$stmt->execute();
 		$result = $stmt->get_result();
@@ -78,7 +78,7 @@
 		$email = $_POST['email'];
 		
 		// Making sure email is not already taken!
-		$stmt = $conn->prepare("SELECT * from login WHERE email = ?");
+		$stmt = $conn->prepare("SELECT * from login WHERE email = ?;");
 		$stmt->bind_param("s", $email);
 		$stmt->execute();
 		$result = $stmt->get_result();
@@ -92,43 +92,47 @@
 			if($password == $confirm_password){
 				
 				// Create the new user and add them into the user database
-				$stmt = $conn->prepare("INSERT INTO user(first_name, last_name) VALUES(?, ?)");
-				$stmt->bind_param("ss", $firstName, $lastName);
-				$stmt->execute();
-				
-				$stmt2 = $conn->prepare("SELECT user_id FROM user WHERE first_name = ? AND last_name = ?");
-				$stmt2->bind_param("ss", $firstName, $lastName);
-				$stmt2->execute();
-				$result = $stmt2->get_result();
-				$row = $result->fetch_assoc();
-				$userID = $row['user_id'];
+				// echo($firstName ." ". $lastName);
+				$stmt_user = $conn->prepare("INSERT INTO user(first_name, last_name, gender) VALUES(?, ?, ?);");
+				$gender = 'Prefer not to Answer';
+				$stmt_user->bind_param("sss", $firstName, $lastName, $gender);
+				$stmt_user_value = $stmt_user->execute();
+				$user_id = -1;
+				if ($stmt_user_value) {
+					$user_id = $conn->insert_id;
+					// echo "New record created successfully. Last inserted ID is: " . $user_id;
+				} else {
+					// echo "Error: " . $stmt . "<br>" . $conn->error;
+				}
 				
 				// Add the rest of their information into the login so they can get back in
 				$hash = md5(rand(0,1000));
-				$stmt3 = $conn->prepare("INSERT INTO login(user_id, email, password, hash) VALUES (?, ?, ?, ?)");
-				$stmt3->bind_param("isss", $row['user_id'], $email, $password, $hash);
-				$stmt3->execute();
+				$stmt_login = $conn->prepare("INSERT INTO login(user_id, email, password, hash) VALUES (?, ?, ?, ?);");
+				// echo($user_id ." ". $email ." ". $password ." ". $hash);
+				$stmt_login->bind_param("isss", $user_id, $email, $password, $hash);
+				$stmt_login->execute();
 				
 				//send the activation email to the new user
-				$to = "emmamay@mymail.mines.edu";
+				// $to = "eclm123@gmail.com";
+				$to = $email;
 				$subject = 'Account Verification';
 				$body = '
 				Thanks for siging up for Mines Match! 
 				Your account has been created. To find the love of your Mines career, login with your credentials:
 				
-				Username: '.$email.'
-				Password: '.$password.'
+				Username: ' . $email . '
+				Password: ' . $password . '
 				
-				Please click this link to activate your account:
+				Please copy and paste this link into your browser to activate your account:
 				localhost/all/MinesMatch/verify.php?email='.$email.'&hash='.$hash.'
 				'; //CHANGE FOR ACTUAL DIRECTORY!!!!!!!!!
-				$headers .= "From: my-email@gmail.com" . "\r\n";
+				$headers .= "From: may.emma127@gmail.com" . "\r\n";
 				$mail = mail($to, $subject, $body, $headers);
-				
-				
-				$cookieValue = $row['user_id'];
-				setcookie($cookieName, $cookieValue, time()+30, "/");
+
+				$cookieValue = $user_id;
+				setcookie($cookieName, $cookieValue, time()+(10*60), "/");
 				header('Location: ./edit_profile.php');
+
 			}
 			else {
 				$message_new = "Passwords did not match!";

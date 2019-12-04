@@ -3,7 +3,7 @@ CREATE TABLE `user` (
  `first_name` text NOT NULL,
  `last_name` text NOT NULL,
  `gender` text NOT NULL,
- `image_file` text,
+ `image_file` text DEFAULT NULL,
  PRIMARY KEY (`user_id`)
 );
 
@@ -11,10 +11,12 @@ CREATE TABLE `login` (
  `user_id` int(11) NOT NULL,
  `email` varchar(256) NOT NULL,
  `password` varchar(256) NOT NULL,
+ `hash` varchar(32) NOT NULL,
+ `active` tinyint(1) NOT NULL DEFAULT 0,
  PRIMARY KEY (`email`,`password`),
  KEY `user_id` (`user_id`),
  CONSTRAINT `login_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-); 
+);
 
 CREATE TABLE `question` (
  `question_id` int(11) NOT NULL AUTO_INCREMENT,
