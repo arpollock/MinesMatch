@@ -59,11 +59,11 @@
             <form id="edit_settings" method="POST">
                 <div class="flex-input">
                     <label for="first">First Name: </label>
-                    <input type="text" name="first" id="first_name" class="login-text-input" placeholder="First name" required>
+                    <input type="text" name="first" id="first_name" class="login-text-input" placeholder="First Name" required>
                 </div>
                 <div class="flex-input">
                     <label for="last">Last Name: </label>
-                    <input type="last" name="last" id="last_name" class="login-text-input" placeholder="<?php echo $first ?>" required>
+                    <input type="last" name="last" id="last_name" class="login-text-input" placeholder="Last Name" value="<?php echo $last ?>" required>
                 </div>
                 <div class="flex-input">
                     <label for="email">Email: </label>
