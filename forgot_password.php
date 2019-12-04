@@ -33,32 +33,40 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="./styles/global.css">
         <link rel="stylesheet" type="text/css" href="./styles/login.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script>
+			function back_to_login() {
+				window.location.href="./login.php";
+			}
+		</script>
     </head>
 	
 <body>
 	<section class="main-content">
 		<div class="login-form">
-		<h1>Welcome to Mines Match!</h1>
-		<p>Enter Your email to recevie your password.</p>
-		
-		<form id="returning_user" method="POST">
-			<div class="flex-input">
-				<label for="email">Email: </label>
-				<input type="email" name="email" id="email" class="login-text-input" placeholder="Enter email" required>
-			</div>
+			<div id="rest-password" class="button" onclick="back_to_login()">< Back to Login</div>
+			<h1>Welcome to Mines Match!</h1>
+			<p>Enter Your email to recevie your password.</p>
 			
-			<?php
-				if(isset($_POST['submit'])){
-					echo "<span class='error'>*" . $message . "</span>";
-				}
-				else {
-					echo "<span class='error'>*</span>";
-				}
-			?>
 			
-			<br/>
-			<input type="submit" name="reset" value="Send Email" class="submit-login button"/>
-		</form>
-	</div>
+			<form id="returning_user" method="POST">
+				<div class="flex-input">
+					<label for="email">Email: </label>
+					<input type="email" name="email" id="email" class="login-text-input" placeholder="Enter email" required>
+				</div>
+				
+				<?php
+					if(isset($_POST['submit'])){
+						echo "<span class='error'>*" . $message . "</span>";
+					}
+					else {
+						echo "<span class='error'>*</span>";
+					}
+				?>
+				
+				<br/>
+				<input type="submit" name="reset" value="Send Email" class="submit-login button"/>
+			</form>
+		</div>
 	</section>
 </body>
