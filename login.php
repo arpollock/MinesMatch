@@ -1,5 +1,4 @@
-<?php
-	
+<?php // DON'T PUT NEWLINES OR SPACES AROUND php tags!! it get mad at me with header error ):
 	$email;
 	$password;
 	$firstName;
@@ -17,14 +16,12 @@
 	$mail = false;
 
 	$cookieUserType = "user_type";
-	$cookieUserTypeValue = "returning";
-
-	
+	$cookieUserTypeValue = "returning";	
 ?>
-
 <?php
+	// ob_start();
 	include('databse_conn.php');
-	
+
 	// checking cookie (DON'T DO ON login page itself -- only on all user-necessary pages)
 	// if(!isset($_COOKIE["user"])) {
 	// 	header("./login.php");
@@ -143,8 +140,8 @@
 			}
 		}
 	}
+	// ob_end_clean();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>  

@@ -1,7 +1,6 @@
 <?php 
 	// Data base connection
 	include "databse_conn.php";
-	
 	$firstName = $_POST['first'];
 	$lastName = $_POST['last'];
 	$email = $_POST['email'];
@@ -28,8 +27,4 @@
 	else {
 		
 	}
-	
-	
-
 ?>
-

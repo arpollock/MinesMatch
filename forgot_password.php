@@ -1,6 +1,5 @@
 <?php
 	include('databse_conn.php');
-	
 	$message_new = '';
 	$message_success = '';
 	
@@ -14,7 +13,6 @@
 		$count = mysqli_num_rows($result);
 		
 		if($count == 1){
-			// echo "Send email to user with password";
 			
 			// Random Pass Generation
 			$char = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -30,7 +28,9 @@
 			$stmt->bind_param("ss", $new_pass, $email);
 			$stmt->execute();
 			
+
 			$msg = "Here is your password: " . $new_pass . "\n You can change this at My Profile>Edit Settings.\n Click here to login: http://localhost/MinesMatch/MinesMatch/login.php";
+
 			$msg = wordwrap($msg, 70);
 			$subject = "Passowrd Reset";
 			mail($email, $subject, $msg);
@@ -43,7 +43,6 @@
 	}
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>  

@@ -67,3 +67,6 @@ hr {
 #waiting {
     display: none;
 }
+.about-text .button:not(:last-child) {
+    margin-right: var(--padding);
+}

@@ -2,7 +2,6 @@
 	if(!isset($_COOKIE['user'])){
 		header("location: ./login.php");
 	}
-	
     $current_page = "my_profile";
     $path_to_home = "./";
 	
@@ -40,7 +39,7 @@
 							echo '<h2>' . $names['first_name'] . " " . $names['last_name'] . '</h2>';
 						?>
                         <button id="edit-preferences" onclick="location.href='./edit_profile.php'" class="button">Edit My Profile</button>
-						<button id="edit-preferences" onclick="location.href='./edit_settings.php'" class="button">Edit My Settings</button>
+						<button id="edit-settings" onclick="location.href='./edit_settings.php'" class="button">Edit My Settings</button>
                     </div>
                     <hr/>
 					<!-- TODO: update this from the database-->

@@ -2,14 +2,38 @@
 	if(!isset($_COOKIE['user'])){
 		header("location: ./login.php");
 	}
-	
     $current_page = "edit_settings";
     $path_to_home = "./";
 	
 	include "databse_conn.php";
 	
+	$userID = $_COOKIE['user'];
+	echo $userID;
+	
+	$stmt = $conn->prepare("SELECT * FROM user WHERE user_id = ?");
+	$stmt->bind_param("ss", $userID);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$row = $result->fetch_assoc();
+	
+	$first = $row['first_name'];
+	$last = $row['last_name'];
+	
+	if(isset($_POST['Change Settings'])) {
+		if(empty($_POST['new_password']) || empty($_POST['confirm_password'])){
+			//only update name
+		}
+		else if(empty($_POST['first']) || empty($_POST['last'])){
+			//only update password
+		}
+		else {
+			//update all
+			$stmt = $conn->prepare("UPDATE login SET password = ? WHERE email = ?");
+			$stmt->bind_param("ss", $new_pass, $email);
+			$stmt->execute();
+		}
+	}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>  
@@ -39,7 +63,7 @@
                 </div>
                 <div class="flex-input">
                     <label for="last">Last Name: </label>
-                    <input type="last" name="last" id="last_name" class="login-text-input" placeholder="Last name" required>
+                    <input type="last" name="last" id="last_name" class="login-text-input" placeholder="<?php echo $first ?>" required>
                 </div>
                 <div class="flex-input">
                     <label for="email">Email: </label>

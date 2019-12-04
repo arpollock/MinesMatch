@@ -9,7 +9,6 @@
         <a onclick="window.location.href='./logout.php'">Sign Out</a>
     </nav>
 </header>
-
 <?php
 function is_active($page_name='') {
     global $current_page;
