@@ -21,12 +21,21 @@
 	$names = $result->fetch_assoc();
 	$first = $names['first_name'];
 	$last = $names['last_name'];
+	$u1id = $_COOKIE['user'];
 	
-	/*function updateDB(matched){
-		if(matched){
-			$sql = "UPDATE matches SET "
+	function updateDB($matched){
+		if($matched){
+			$sql = "UPDATE matches SET match_state = match_state + 1 WHERE user1_id = ? AND user2_id = ?";
+			$stmt = $conn->prepare($sql);
+			$stmt->bind_param("ii", $u1id, $uid);
+			$stmt->execute();
+		}else{
+			$sql = "UPDATE matches SET match_state = 0 WHERE user1_id = ? AND user2_id = ?";
+			$stmt = $conn->prepare($sql);
+			$stmt->bind_param("ii", $u1id, $uid);
+			$stmt->execute();
 		}
-	}*/
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">

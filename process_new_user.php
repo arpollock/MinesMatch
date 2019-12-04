@@ -14,11 +14,12 @@
 		// Create the new user and add them into the user database
 		$stmt = $conn->prepare("INSERT INTO user(first, last) VALUES(?, ?)");
 		$stmt->bind_param("ss", $firstName, $lastName);
-		$stmt->execute() or die("Failed to add you!");
+		$stmt->execute();// or die("Failed to add you!");
 		
 		// Add the rest of their information into the login so they can get back in
-		$stmt = $conn->prepare("INSERT INTO login(email, passowrd) VALUES (?, ?)");
-		$stmt->bind_param("ss", $email, $password);
+		$hash = md5(rand(0,1000));
+		$stmt = $conn->prepare("INSERT INTO login(email, password, hash) VALUES (?, ?, ?)");
+		$stmt->bind_param("sss", $email, $password, $hash);
 		$stmt->execute() or die("Failed to add you!");
 		
 		echo "You are now a user!";
