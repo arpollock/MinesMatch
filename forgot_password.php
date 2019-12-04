@@ -13,7 +13,6 @@
 		$count = mysqli_num_rows($result);
 		
 		if($count == 1){
-			echo "Send email to user with password";
 			
 			// Random Pass Generation
 			$char = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -29,7 +28,7 @@
 			$stmt->bind_param("ss", $new_pass, $email);
 			$stmt->execute();
 			
-			$msg = "Here is your password: " . $password . "\n Click here to login: http://localhost/MinesMatch/MinesMatch/login.php";
+			$msg = "Here is your password: " . $ . "\n Click here to login: http://localhost/MinesMatch/MinesMatch/login.php";
 			$msg = wordwrap($msg, 70);
 			$subject = "Passowrd Reset";
 			mail($email, $subject, $msg);
