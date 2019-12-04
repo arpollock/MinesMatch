@@ -72,7 +72,6 @@
         <?php include './templateHeader.php'; ?>
         <section class="main-content">
             <h2>Edit My Settings</h2>
-			
             <form id="edit_settings" method="POST">
                 <div class="flex-input">
                     <label for="first">First Name: </label>

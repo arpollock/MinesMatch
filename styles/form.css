@@ -5,7 +5,13 @@
 #edit_preferences {
     padding: 0 var(--padding);
 }
-#edit_preferences>* {
+#edit_settings {
+    padding: var(--padding);
+}
+#edit_settings>*:not(:last-child) {
+    margin-bottom: var(--padding);
+}
+#edit_preferences>*{
     margin-top: var(--padding);
     margin-bottom: var(--padding);
 }
@@ -18,7 +24,7 @@
 #edit_preferences>fieldset:nth-child(even) {
     border: 2px solid var(--secondary-bg-color);
 }
-#edit_preferences .flex-input {
+#edit_preferences .flex-input, #edit_settings .flex-input {
     justify-content: flex-start;
     width: 100%;
 }
