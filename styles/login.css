@@ -8,7 +8,7 @@ body {
     height: 100vh;
     overflow: hidden;
 }
-.login-form {
+.login-form, .verify-block {
     display: block;
     width: 67%;
     height: auto;

@@ -1,5 +1,4 @@
-<?php
-	
+<?php // DON'T PUT NEWLINES OR SPACES AROUND php tags!! it get mad at me with header error ):
 	$email;
 	$password;
 	$firstName;
@@ -17,14 +16,12 @@
 	$mail = false;
 
 	$cookieUserType = "user_type";
-	$cookieUserTypeValue = "returning";
-
-	
+	$cookieUserTypeValue = "returning";	
 ?>
-
 <?php
+	// ob_start();
 	include('databse_conn.php');
-	
+
 	// checking cookie (DON'T DO ON login page itself -- only on all user-necessary pages)
 	// if(!isset($_COOKIE["user"])) {
 	// 	header("./login.php");
@@ -129,7 +126,9 @@
 				localhost/all/MinesMatch/verify.php?email='.$email.'&hash='.$hash.'
 				'; //CHANGE FOR ACTUAL DIRECTORY!!!!!!!!!
 				$headers = "From: may.emma127@gmail.com" . "\r\n";
-				$mail = mail($to, $subject, $body, $headers);
+				$mail = false;
+				//$mail = mail($to, $subject, $body, $headers);
+				mail($to, $subject, $body, $headers);
 
 				$cookieValue = $user_id;
 				setcookie($cookieName, $cookieValue, time()+(10*60), "/");
@@ -141,8 +140,8 @@
 			}
 		}
 	}
+	// ob_end_clean();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>  

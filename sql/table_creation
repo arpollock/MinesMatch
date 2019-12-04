@@ -40,7 +40,7 @@ CREATE TABLE `preference` (
 CREATE TABLE `matches` (
  `user1_id` int(11) NOT NULL,
  `user2_id` int(11) NOT NULL,
- `match_state` enum('0','1','2','3') NOT NULL,
+ `match_state` int(11) NOT NULL DEFAULT 1,
  PRIMARY KEY (`user2_id`,`user1_id`),
  KEY `user1_id` (`user1_id`,`user2_id`),
  CONSTRAINT `matches_ibfk_1` FOREIGN KEY (`user1_id`) REFERENCES `user` (`user_id`),
@@ -48,30 +48,30 @@ CREATE TABLE `matches` (
 );
 
 INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
-VALUES (1, 'What is your gender?', '', 0)
+VALUES (1, 'What is your gender?', '', 0);
 
 INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
-VALUES (2, 'What genders would you like to match with?', '', 0)
+VALUES (2, 'What genders would you like to match with?', '', 0);
 
 INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
-VALUES (3, 'What is your major?', '', 0)
+VALUES (3, 'What is your major?', '', 0);
 
 INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
-VALUES (4, 'What majors are you interested in?', '', 0)
+VALUES (4, 'What majors are you interested in?', '', 0);
 
 INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
-VALUES (5, 'What year are you graduating?', '', 0)
+VALUES (5, 'What year are you graduating?', '', 0);
 
 INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
-VALUES (6, 'What graduation years are you interested in?', '', 0)
+VALUES (6, 'What graduation years are you interested in?', '', 0);
 
 INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
-VALUES (7, 'What is your ideal date?', '', 0)
+VALUES (7, 'What is your ideal date?', '', 0);
 
 INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
-VALUES (8, 'What is your nerdiest characteristic?', '', 0)
+VALUES (8, 'What is your nerdiest characteristic?', '', 0);
 
-INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`) 
-VALUES (9, 'What is your favorite place in Golden?', '', 0)
+INSERT INTO `question`(`question_id`, `question_text`, `question_answer`, `weight`)
+VALUES (9, 'What is your favorite place in Golden?', '', 0);
 
 

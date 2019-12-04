@@ -2,16 +2,11 @@
 	if(!isset($_COOKIE['user'])){
 		header("location: ./login.php");
 	}
-	
     $current_page = "edit_profile";
     $path_to_home = "./";
 	
-	include "databse_conn.php";
-	
-?>
-
-
-<?php
+    include "databse_conn.php";
+    
 	// Form Validation
 	$required = array('gender', 'orientation', 'major', 'majors_pref', 'grad_year', 'grad_year_pref');
 	$error = false;
@@ -73,27 +68,12 @@
 			header('Location: ./my_profile.php');
 		}
 	}
-	
 	if(isset($_POST['cancel'])){
 		header('Location: ./my_profile.php');
 	}
+
 ?>
 
-<?php
-	//Add in user to the matches database, with the potential to match to every user. Set state = 1, pending both 
-	$state = 1;
-	$u1id = $_COOKIE['user'];
-	$sql = "SELECT user_id FROM user WHERE user_id <> $u1id";
-	$result = $conn->query($sql);
-	if($result->num_rows > 0){
-		while($row = $result->fetch_assoc()){
-			$sql2 = "INSERT INTO matches(user1_id, user2_id, match_state) VALUES(?,?,?)";
-			$stmt = $conn->prepare($sql2);
-			$stmt->bind_param("iii", $u1id, $row['user_id'], $state);
-			$stmt->execute();
-		}
-	}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -147,6 +127,13 @@
                     <br/>
                     <input type="radio" name="orientation" id="both" class="pinfo-input" value="both"/>
                     <label for="both">Both!</label>
+                    <br/>
+                    <br/>
+
+                    <label for="bio">Your bio:</label>
+                    <br/>
+                    <textarea name="bio" id="bio" class="pinfo-input"></textarea>
+
                 </fieldset>
                 <fieldset>
                     <legend>Academic Information</legend>

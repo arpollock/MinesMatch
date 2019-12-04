@@ -2,7 +2,6 @@
 	if(!isset($_COOKIE['user'])){
 		header("location: ./login.php");
 	}
-	
     $current_page = "edit_settings";
     $path_to_home = "./";
 	
@@ -54,11 +53,8 @@
 		else {
 			$message = "Your current password was not correct!";
 		}
-		
 	}
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>  
@@ -85,6 +81,7 @@
                 <div class="flex-input">
                     <label for="last">Last Name: </label>
                     <input type="last" name="last" id="last_name" class="login-text-input" value="<?php echo ucfirst($last) ?>" required>
+
                 </div>
                 <br/>
                 <div class="flex-input">
