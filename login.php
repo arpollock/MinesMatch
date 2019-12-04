@@ -11,8 +11,11 @@
 	$cookieName = "user";
 	$cookieValue;
 
+	$mail = true;
+
 	$cookieUserType = "user_type";
 	$cookieUserTypeValue = "returning";
+
 	
 ?>
 
@@ -98,9 +101,27 @@
 				$userID = $row['user_id'];
 				
 				// Add the rest of their information into the login so they can get back in
-				$stmt3 = $conn->prepare("INSERT INTO login(user_id, email, password) VALUES (?, ?, ?)");
-				$stmt3->bind_param("iss", $row['user_id'], $email, $password);
+				$hash = md5(rand(0,1000));
+				$stmt3 = $conn->prepare("INSERT INTO login(user_id, email, password, hash) VALUES (?, ?, ?, ?)");
+				$stmt3->bind_param("isss", $row['user_id'], $email, $password, $hash);
 				$stmt3->execute();
+				
+				//send the activation email to the new user
+				$to = "emmamay@mymail.mines.edu";
+				$subject = 'Account Verification';
+				$body = '
+				Thanks for siging up for Mines Match! 
+				Your account has been created. To find the love of your Mines career, login with your credentials:
+				
+				Username: '.$email.'
+				Password: '.$password.'
+				
+				Please click this link to activate your account:
+				localhost/all/MinesMatch/verify.php?email='.$email.'&hash='.$hash.'
+				'; //CHANGE FOR ACTUAL DIRECTORY!!!!!!!!!
+				$headers .= "From: my-email@gmail.com" . "\r\n";
+				$mail = mail($to, $subject, $body, $headers);
+				
 				
 				$cookieValue = $row['user_id'];
 				setcookie($cookieName, $cookieValue, time()+3600, "/");
@@ -179,6 +200,13 @@
 				<div id="rest-password" class="button" onclick="forgot_password()">Reset Password</div>
                 <h1>Welcome to Mines Match!</h1>
                 <p>The online dating service for geeks, by geeks.</p>
+				<?php
+				if($mail){
+					echo "SUCCESS";
+				}else{
+					echo "FAIL";
+				}
+				?>
 				
 				<form id="new_user" method="POST">
 					<div class="flex-input">
