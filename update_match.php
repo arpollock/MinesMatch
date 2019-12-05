@@ -44,5 +44,7 @@ if($curr_match_state != -1) {
     $stmt->bind_param("iii", $new_match_state, $user1_id, $user2_id);
     $stmt->execute();
     echo($new_match_state);
+} else {
+    echo($curr_match_state);
 }
 ?>
