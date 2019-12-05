@@ -23,9 +23,31 @@
     <body>
         <!-- This content is seen on the main viewport -->
         <?php include './templateHeader.php'; ?>
+		<?php
+			$uid = $_COOKIE['user'];
+			$sql = "SELECT question_answer FROM preference WHERE question_id=1 AND user_id=?;";
+			$stmt = $conn->prepare($sql);
+			$stmt->bind_param('i', $uid);
+			$stmt->execute();
+			$result = $stmt->get_result();
+			$row = $result->fetch_assoc();
+			
+			$compareMale = strcmp($row['question_answer'], 'male');
+			$compareFemale = strcmp($row['question_answer'], 'female');
+			
+			if($compareFemale == 0){
+				$imgData = "./avatars/female.png";
+			}
+			else if($compareMale == 0) {
+				$imgData = "./avatars/male.png";
+			}else{
+				$imgData = "./images/user.png";
+			}
+			
+		?>
         <section class="main-content">
             <section class="about-wrapper">
-                <img class="profile-pic" src="./images/user.png" style="max-width: 200px; height: auto;" alt="My profile pic."/>
+                <img class="profile-pic" src=<?php echo $imgData;?> style="max-width: 200px; height: auto;" alt="My profile pic."/>
                 <div class="about-text">
                     <div class="title-wrapper">
 						<?php
@@ -63,9 +85,6 @@
 								if($row['question_id'] == 5){
 									echo '<span class="gen-info">' . "Class of " .$answer['question_answer'] . '</span>';
 								}
-								if($row['question_id'] == 10){
-									echo '<p class="gen-info">BIO: ' . $answer['question_answer'] . '</p>';
-								}
 						}
 					 }
 					?>
@@ -74,6 +93,8 @@
             <hr/>
             <section class="all-questions">
                 <div class="question-wrapper">
+				<fieldset>
+				<legend>About</legend>
 					<?php
 					 $sql = "SELECT question_text, question_id FROM question WHERE question_id > 6";
 					 $result = $conn->query($sql);
@@ -90,6 +111,7 @@
 						}
 					 }
 					?>
+				</fieldset>
                 </div>
             </section>
         </section>

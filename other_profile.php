@@ -48,6 +48,26 @@
 	} else {
 		$is_pending = $ids_result->num_rows;
 	}
+	
+
+	$sql = "SELECT question_answer FROM preference WHERE question_id=1 AND user_id=?;";
+	$stmt = $conn->prepare($sql);
+	$stmt->bind_param('i', $user2_id);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$row = $result->fetch_assoc();
+	
+	$compareMale = strcmp($row['question_answer'], 'male');
+	$compareFemale = strcmp($row['question_answer'], 'female');
+	
+	if($compareFemale == 0){
+		$imgData = "./avatars/female.png";
+	}
+	else if($compareMale == 0) {
+		$imgData = "./avatars/male.png";
+	}else{
+		$imgData = "./images/user.png";
+	}	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +88,7 @@
         <?php include './templateHeader.php'; ?>
         <section class="main-content">
             <section class="about-wrapper">
-                <img class="profile-pic" src="./images/user.png" style="max-width: 200px; height: auto;" alt="Their profile pic."/>
+                <img class="profile-pic" src=<?php echo $imgData ?> style="max-width: 200px; height: auto;" alt="Their profile pic."/>
                 <div class="about-text">
                     <div class="title-wrapper">
                         <h2><?php echo $first . " " . $last?>'s profile</h2>
@@ -83,7 +103,7 @@
                     </div>
                     <hr/>
 					<?php
-						$sql = "SELECT question_text, question_id FROM question WHERE question_id < 7";
+						$sql = "SELECT question_text, question_id FROM question";// WHERE question_id < 7";
 						$result = $conn->query($sql);
 						if($result->num_rows > 0){
 							while($row = $result->fetch_assoc()){
@@ -96,22 +116,23 @@
 								if($row['question_id'] == 1){
 									echo '<span class="gen-info">' . $answer['question_answer'] . ' | ' . '</span>';
 								}
-								if($row['question_id'] == 3){
+								else if($row['question_id'] == 3){
 									echo '<span class="gen-info">' . $answer['question_answer'] . ' | ' . '</span>';
 								}
-								if($row['question_id'] == 5){
+								else if($row['question_id'] == 5){
 									echo '<span class="gen-info">' . "Class of " .$answer['question_answer'] . '</span>';
 								}
 							}
 					 	}
 					?>
-                    <p>This is my main bio blurb! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
 				</div>          
             </section>
             <hr/>
             <section class="all-questions">
                 <div class="question-wrapper">
 					<!-- popultae with their answers to questions from the database-->
+					<fieldset>
+					<legend>About</legend>
 					<?php
 					 $sql = "SELECT question_text, question_id FROM question WHERE question_id > 6";
 					 $result = $conn->query($sql);
@@ -128,6 +149,7 @@
 						}
 					 }
 					?>
+					</fieldset>
                 </div>
             </section>
         </section>

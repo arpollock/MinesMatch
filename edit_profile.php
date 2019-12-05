@@ -4,6 +4,7 @@
 	}
     $current_page = "edit_profile";
     $path_to_home = "./";
+	$imgsrc = './imgaes/user.png';
 	
     include "databse_conn.php";
     
@@ -203,7 +204,7 @@
 				
 			?>
             <form id="edit_preferences" method="POST">
-                <fieldset>
+				<fieldset>
                     <legend>Gender &amp; Sexual Preferences</legend>
 					<!--TODO: These responses must be saved in the database-->
                     <span>What is your gender?</span><span class="error"> * Required</span>
