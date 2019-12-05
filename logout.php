@@ -2,13 +2,12 @@
     $current_page = "login";
     $path_to_home = "./";
 	$process_login = "./process_login.php";
-	$cookieName = "user";
-?>
-<?php
-	$userID = $_POST['userID'];
-	setcookie($cookieName, $userID, time()-6600);
-?>
-<?php
+	$cookieName = 'user';
+	$userID = -1;
+    setcookie($cookieName, $userID, ( time() - 66000 ) );
+    header("Cache-Control: no-cache, must-revalidate");
+    header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+    header("Content-Type: application/xml; charset=utf-8");
 	header("location: ./login.php");
 	exit();
 ?>
@@ -26,12 +25,12 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="./scripts/login.js"></script>
 		<script>
-			window.onload = function logout() {
-				alert("Logout successful!");
-			};
+			// window.onload = function logout() {
+			// 	alert("Logout successful!");
+			// };
 		</script>
     </head>	
-	<body onload="logout()"></body>
+	<body></body> <!-- onload="logout()" -->
 </html>
 
 

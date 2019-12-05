@@ -102,7 +102,6 @@
         <?php include './templateHeader.php'; ?>
         <section class="main-content">
             <h2 style="display: none;">Dashboard Tabs</h2>
-			<!-- TODO: store cookies here so can do "Back to Pending/Successful Matches"-->
 			<section class="blocked-tabs" <?php if ($no_preferences) { echo 'style="display: block;"'; } else { echo 'style="display: none;"'; } ?> >
 				<p>Go to <a href="./my_profile.php">My Profile<a> > <a href="./edit_profile.php">Edit My Profile</a> to fill out your match information. Then we can start looking for the geek of your dreams!</p>
 			</section>

@@ -12,6 +12,10 @@ h2:first-of-type {
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
+    margin-bottom: var(--padding);
+}
+.about-text {
+    flex-grow: 20;
 }
 .about-text>.gen-info {
     font-style: italic;
@@ -69,4 +73,8 @@ hr {
 }
 .about-text .button:not(:last-child) {
     margin-right: var(--padding);
+}
+.question-wrapper>fieldset {
+    margin-bottom: var(--padding);
+    border: 2px solid var(--main-pop-color);
 }

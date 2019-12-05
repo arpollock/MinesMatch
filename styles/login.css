@@ -6,7 +6,8 @@ body {
 }
 .main-content, body {
     height: 100vh;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .login-form, .verify-block {
     display: block;

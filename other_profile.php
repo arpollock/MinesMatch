@@ -48,12 +48,34 @@
 	} else {
 		$is_pending = $ids_result->num_rows;
 	}
+	
+
+	$sql = "SELECT question_answer FROM preference WHERE question_id=1 AND user_id=?;";
+	$stmt = $conn->prepare($sql);
+	$stmt->bind_param('i', $uid);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$row = $result->fetch_assoc();
+	
+	$compareMale = strcmp($row['question_answer'], 'male');
+	$compareFemale = strcmp($row['question_answer'], 'female');
+	$compareNB = strcmp($row['question_answer'], 'nb');
+	
+	if($compareFemale == 0){
+		$imgData = "./avatars/female.png";
+	} else if($compareMale == 0) {
+		$imgData = "./avatars/male.png";
+	} else if($compareNB == 0) {
+		$imgData = "./avatars/nb.png";
+	} else {
+		$imgData = "./avatars/na.png";
+	}	
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>  
         <!-- This content is hidden from the main viewport -->
-        <title>Mines Match - _____'s Profile</title>
+        <title>Mines Match - <?php echo $first . " " . $last?>'s Profile</title>
         <meta charset="utf-8"/>
         <meta name="description" content="Mines Match Dashboard"/>
         <meta name="author" content="Alex P, Emma M, and Morgan C"/>
@@ -68,10 +90,10 @@
         <?php include './templateHeader.php'; ?>
         <section class="main-content">
             <section class="about-wrapper">
-                <img class="profile-pic" src="./images/user.png" style="max-width: 200px; height: auto;" alt="Their profile pic."/>
+                <img class="profile-pic" src=<?php echo $imgData ?> style="max-height: 200px; width: auto;" alt="Their profile pic."/>
                 <div class="about-text">
                     <div class="title-wrapper">
-                        <h2><?php echo $first . " " . $last?>'s profile</h2>
+                        <h2><?php echo $first . " " . $last?>'s Profile</h2>
 						<!-- TODO: Adjust the match_state in the database based on button clicked here-->
                         <div id="match-buttons" <?php if ( $is_pending!=0 && $is_pending!=$my_match_userid ) { echo 'style="display: none;"'; } ?> >
                             <div id="match-yes" onclick="match(<?php echo($my_uid . ', ' . $uid); ?>, true)">Yes &lt;3</div>
@@ -83,37 +105,48 @@
                     </div>
                     <hr/>
 					<?php
-						$sql = "SELECT question_text, question_id FROM question WHERE question_id < 7";
+						$sql = "SELECT question_text, question_id FROM question";// WHERE question_id < 7";
 						$result = $conn->query($sql);
 						if($result->num_rows > 0){
-							while($row = $result->fetch_assoc()){
-								$sql2 = "SELECT question_answer FROM preference WHERE user_id=? AND question_id = ?";
-								$stmt = $conn->prepare($sql2);
-								$stmt->bind_param("ii", $uid, $row['question_id']);
-								$stmt->execute();
-								$result2 = $stmt->get_result();
-								$answer = $result2->fetch_assoc();
-								if($row['question_id'] == 1){
-									echo '<span class="gen-info">' . $answer['question_answer'] . ' | ' . '</span>';
+							$basic_bio_info = array(); // use array to control order of appearance (just for basic bio info)
+							if($result->num_rows > 0){
+								while($row = $result->fetch_assoc()){
+									$sql2 = "SELECT question_answer FROM preference WHERE user_id=? AND question_id =?;";
+									$stmt = $conn->prepare($sql2);
+									$stmt->bind_param("ii", $uid, $row['question_id']);
+									$stmt->execute();
+									$result2 = $stmt->get_result();
+									if ($result2->num_rows > 0) {
+										$answer = $result2->fetch_assoc();
+										$basic_bio_info[ strval($row['question_id']) ] = $answer['question_answer'];
+									}
 								}
-								if($row['question_id'] == 3){
-									echo '<span class="gen-info">' . $answer['question_answer'] . ' | ' . '</span>';
-								}
-								if($row['question_id'] == 5){
-									echo '<span class="gen-info">' . "Class of " .$answer['question_answer'] . '</span>';
+							} 
+							if(count($basic_bio_info) == 0) { // they have not entered their basic bio preferences
+								echo('<p class="gen-info">This user has not entered in bio information yet.</p>');
+							} else {
+								ksort($basic_bio_info);
+								foreach($basic_bio_info as $q_number=>$q_answer) {
+									if($q_number == '5') {
+										echo '<span class="gen-info">' . "Class of " .$q_answer . '</span>';
+									} else if ($q_number == '10'){
+										echo '<p class="gen-info">' . $q_answer . '</p>';
+									} else if ($q_number == '1' || $q_number == '3') {
+										echo '<span class="gen-info">' . $q_answer . ' | ' .'</span>';
+									}
 								}
 							}
 					 	}
 					?>
-                    <p>This is my main bio blurb! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
 				</div>          
             </section>
-            <hr/>
             <section class="all-questions">
                 <div class="question-wrapper">
 					<!-- popultae with their answers to questions from the database-->
+					<fieldset>
+					<legend>About</legend>
 					<?php
-					 $sql = "SELECT question_text, question_id FROM question WHERE question_id > 6";
+					 $sql = "SELECT question_text, question_id FROM question WHERE question_id > 6 AND question_id < 10";
 					 $result = $conn->query($sql);
 					 if($result->num_rows > 0){
 						while($row = $result->fetch_assoc()){
@@ -128,6 +161,7 @@
 						}
 					 }
 					?>
+					</fieldset>
                 </div>
             </section>
         </section>
