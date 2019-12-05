@@ -11,6 +11,7 @@
 	// Add in user to the matches database, with the potential to match to every user. Set state = 0, pending both 
 	$state = 0;
 	$my_uid = $_COOKIE['user'];
+	$no_preferences = true;
 
 	//get the gender they want to match with
 	$my_genderpref_statement = "SELECT question_answer FROM preference WHERE question_id=2 AND user_id=?";
@@ -18,36 +19,65 @@
 	$my_genderpref_sql->bind_param("i", $my_uid);
 	$my_genderpref_sql->execute();
 	$my_genpref = $my_genderpref_sql->get_result();
-	$my_gender_pref = $my_genpref->fetch_assoc();
-	$gender_real_pref = $my_gender_pref['question_answer'];
+	if($my_genpref->num_rows > 0){
+		$my_gender_pref = $my_genpref->fetch_assoc();
+		$gender_real_pref = $my_gender_pref['question_answer'];
+		//get the gender of the current user
+		$my_gender_sql = $conn->prepare("SELECT question_answer FROM preference WHERE question_id=1 AND user_id=?;");
+		$my_gender_sql->bind_param("i", $my_uid);
+		$my_gender_sql->execute();
+		$my_gender_result = $my_gender_sql->get_result();
+		$my_gen = '';
+		if($my_gender_result->num_rows > 0){
+			$no_preferences = false;
+			$my_gen = $my_gender_result->fetch_assoc();
+			$my_gender = $my_gen['question_answer'];
+			$sql_get_all_possible_matches = "SELECT user_id FROM user WHERE user_id <> $my_uid;";
+			$result_all_possib = $conn->query($sql_get_all_possible_matches);
+			if($result_all_possib->num_rows > 0){
+				while( $row = $result_all_possib->fetch_assoc() ){
+					// see if already is a match
+					$stmt_get_match = $conn->prepare("SELECT * FROM MATCHES WHERE (user1_id=? AND user2_id=?) OR (user1_id=? AND user2_id=?);");
+					$stmt_get_match->bind_param("iiii", $my_uid, $row['user_id'], $row['user_id'], $my_uid);
+					$stmt_get_match->execute();
+					$stmt_get_match_result = $stmt_get_match->get_result();
+					if($stmt_get_match_result->num_rows == 0){
+						//get the gender of the other user
+						$gendersql = $conn->prepare("SELECT question_answer FROM preference WHERE question_id=1 AND user_id=?;");
+						$gendersql->bind_param("i", $row['user_id']);
+						$gendersql->execute();
+						$gen2 = $gendersql->get_result();
+						$gender2 = $gen2->fetch_assoc();
+						$genderReal = $gender2['question_answer'];
+						//get the gender the other user wants to match with
+						$genderpref_statement = "SELECT question_answer FROM preference WHERE question_id=2 AND user_id=?";
+						$genderpref_sql = $conn->prepare($genderpref_statement);
+						$genderpref_sql->bind_param("i", $row['user_id']);
+						$genderpref_sql->execute();
+						$genpref = $genderpref_sql->get_result();
+						$gender_pref = $genpref->fetch_assoc();
+						$their_gender_real_pref = $gender_pref['question_answer'];
+						
+						//if the gender prefs match, then display
+						$compare1 = strcmp($gender_real_pref, $genderReal);
+						$compare2 = strcmp($their_gender_real_pref, $my_gender);
 
-	$sql_get_all_possible_matches = "SELECT user_id FROM user WHERE user_id <> $my_uid;";
-	$result_all_possib = $conn->query($sql_get_all_possible_matches);
-	if($result_all_possib->num_rows > 0){
-		while($row = $result_all_possib->fetch_assoc()){
-			//get the gender of the other user
-			$gendersql = $conn->prepare("SELECT question_answer FROM preference WHERE question_id=1 AND user_id=?;");
-			$gendersql->bind_param("i", $row['user_id']);
-			$gendersql->execute();
-			$gen2 = $gendersql->get_result();
-			$gender2 = $gen2->fetch_assoc();
-			$genderReal = $gender2['question_answer'];
-			
-			//if the gender prefs match, then display
-			$compare = strcmp($gender_real_pref,$genderReal);
-			if($gender_real_pref == 'both') {
-				$compare = 0;
-			}
-			// see if already is a match
-			$stmt_get_match = $conn->prepare("SELECT * FROM MATCHES WHERE (user1_id=? AND user2_id=?) OR (user1_id=? AND user2_id=?);");
-			$stmt_get_match->bind_param("iiii", $my_uid, $row['user_id'], $row['user_id'], $my_uid);
-			$stmt_get_match->execute();
-			$stmt_get_match_result = $stmt_get_match->get_result();
-			if($compare == 0 && $stmt_get_match_result->num_rows == 0){
-				$sql_create_match = "INSERT INTO matches(user1_id, user2_id, match_state) VALUES(?,?,?);";
-				$stmt_create_match = $conn->prepare($sql_create_match);
-				$stmt_create_match->bind_param("iii", $my_uid, $row['user_id'], $state);
-				$stmt_create_match->execute();
+						// string comparison doesn't work for both answer
+						if($gender_real_pref == 'both' ) {
+							$compare1 = 0;
+						}
+						if($their_gender_real_pref == 'both') {
+							$compare2 = 0;
+						}
+						
+						if($compare1 == 0 && $compare2 == 0){
+							$sql_create_match = "INSERT INTO matches(user1_id, user2_id, match_state) VALUES(?,?,?);";
+							$stmt_create_match = $conn->prepare($sql_create_match);
+							$stmt_create_match->bind_param("iii", $my_uid, $row['user_id'], $state);
+							$stmt_create_match->execute();
+						}
+					}
+				}
 			}
 		}
 	}
@@ -72,8 +102,11 @@
         <?php include './templateHeader.php'; ?>
         <section class="main-content">
             <h2 style="display: none;">Dashboard Tabs</h2>
-            <!-- TODO: store cookies here so can do "Back to Pending/Successful Matches"-->
-            <section class="tab-wrapper">
+			<!-- TODO: store cookies here so can do "Back to Pending/Successful Matches"-->
+			<section class="blocked-tabs" <?php if ($no_preferences) { echo 'style="display: block;"'; } else { echo 'style="display: none;"'; } ?> >
+				<p>Go to <a href="./my_profile.php">My Profile<a> > <a href="./edit_profile.php">Edit My Profile</a> to fill out your match information. Then we can start looking for the geek of your dreams!</p>
+			</section>
+            <section class="tab-wrapper" <?php if ($no_preferences) { echo 'style="display: none;"'; } ?> >
                 <div class="tab-header">
                     <div class="tab-item tab-item-active" id="pending-matches-tab" onclick="toggle_match_tab('pending')">
                         Pending Matches

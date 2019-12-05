@@ -1,3 +1,6 @@
+.blocked-tabs {
+    padding: var(--padding);
+}
 .tab-header {
     width: 100%;
     display: block;

@@ -46,28 +46,46 @@
 					<?php
 						$sql = "SELECT question_text, question_id FROM question";// WHERE question_id < 7";
 						$result = $conn->query($sql);
+						$basic_bio_info = array(); // use array to control order of appearance (just for basic bio info)
 						if($result->num_rows > 0){
 							while($row = $result->fetch_assoc()){
-								$sql2 = "SELECT question_answer FROM preference WHERE user_id=? AND question_id = ?";
+								$sql2 = "SELECT question_answer FROM preference WHERE user_id=? AND question_id =?;";
 								$stmt = $conn->prepare($sql2);
 								$stmt->bind_param("ii", $uid, $row['question_id']);
 								$stmt->execute();
 								$result2 = $stmt->get_result();
-								$answer = $result2->fetch_assoc();
-								if($row['question_id'] == 1){
-									echo '<span class="gen-info">' . $answer['question_answer'] . ' | '  . '</span>';
+								if ($result2->num_rows > 0) {
+									$answer = $result2->fetch_assoc();
+									$basic_bio_info[ strval($row['question_id']) ] = $answer['question_answer'];
 								}
-								if($row['question_id'] == 3){
-									echo '<span class="gen-info">' . $answer['question_answer'] . ' | '  . '</span>';
+								// if($row['question_id'] == 1){
+								// 	echo '<span class="gen-info">' . $answer['question_answer'] . ' | '  . '</span>';
+								// }
+								// if($row['question_id'] == 3){
+								// 	echo '<span class="gen-info">' . $answer['question_answer'] . ' | '  . '</span>';
+								// }
+								// if($row['question_id'] == 5){
+								// 	echo '<span class="gen-info">' . "Class of " .$answer['question_answer'] . '</span>';
+								// }
+								// if($row['question_id'] == 10){
+								// 	echo '<p class="gen-info">' . $answer['question_answer'] . '</p>';
+								// }
+							}
+						} 
+						if(count($basic_bio_info) == 0) { // they have not entered their basic bio preferences
+							echo('<p class="gen-info">You haven\'t updated your profile yet. Click "Edit My Profile" Above to Get Started!</p>');
+						} else {
+							ksort($basic_bio_info);
+							foreach($basic_bio_info as $q_number=>$q_answer) {
+								if($q_number == '5') {
+									echo '<span class="gen-info">' . "Class of " .$q_answer . '</span>';
+								} else if ($q_number == '10'){
+									echo '<p class="gen-info">' . $q_answer . '</p>';
+								} else if ($q_number == '1' || $q_number == '3') {
+									echo '<span class="gen-info">' . $q_answer . ' | ' .'</span>';
 								}
-								if($row['question_id'] == 5){
-									echo '<span class="gen-info">' . "Class of " .$answer['question_answer'] . '</span>';
-								}
-								if($row['question_id'] == 10){
-									echo '<p class="gen-info">BIO: ' . $answer['question_answer'] . '</p>';
-								}
+							}
 						}
-					 }
 					?>
                 </div>          
             </section>
@@ -75,7 +93,7 @@
             <section class="all-questions">
                 <div class="question-wrapper">
 					<?php
-					 $sql = "SELECT question_text, question_id FROM question WHERE question_id > 6";
+					 $sql = "SELECT question_text, question_id FROM question WHERE question_id > 6 AND question_id < 10;";
 					 $result = $conn->query($sql);
 					 if($result->num_rows > 0){
 						while($row = $result->fetch_assoc()){
